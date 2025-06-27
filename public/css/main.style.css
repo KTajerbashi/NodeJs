@@ -1,0 +1,35 @@
+body {
+  background: #b9b9b9;
+}
+header {
+  border: 1px solid black;
+  margin: 10px 0;
+}
+main {
+  margin: 10px 0;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul > li > a {
+  border: 1px solid beige;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+ul > li > a:hover {
+  border: 1px solid rgb(68, 68, 0);
+}

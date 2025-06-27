@@ -1,19 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 router.use("/", (req, res, next) => {
-  const template = `
-  <div style="text-align:center;">
-    <h1>Main Page</h1>
-    <hr/>
-    <div >
-        <a href="/dashboard">Dashboard</a>
-        <br/>
-        <a href="/user">User</a>
-    </div>
-  </div>
-  `;
-  res.send(template);
+  res.sendFile(path.join(__dirname, "../", "views", "index.html"));
 });
 
 module.exports = router;
