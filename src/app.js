@@ -1,8 +1,9 @@
-//  Create Web Server
-const port = 8000;
-
 const http = require("http");
 
-const server = http.createServer((req, res) => {});
+const express = require("express");
 
-server.listen(port);
+const app = express();
+
+const server = http.createServer(app);
+
+server.listen(8000);
