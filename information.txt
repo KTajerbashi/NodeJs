@@ -1,0 +1,11 @@
+❌ | ✅ : initial npm and github
+❌ | ✅ : Create Base File
+❌ | ✅ : node ./src/app
+❌ | ✅ : Create Server (nodemon) : nodemon ./src/app
+❌ | ✅ : Download MongoDb and install
+❌ | ✅ : Download Rob 3t (robomongo)
+❌ | ✅ : 
+❌ | ✅ : 
+❌ | ✅ : 
+❌ | ✅ : 
+❌ | ✅ : 
