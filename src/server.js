@@ -8,6 +8,8 @@ const productRoutes = require("./routes/product.routes");
 //  Startup Configuration
 const app = express();
 
+app.use(express.json());
+
 //  Add Routes to Application
 app.use("/api", productRoutes);
 app.use("/", mainRoutes);

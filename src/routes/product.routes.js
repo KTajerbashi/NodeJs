@@ -2,22 +2,13 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/products", (req, res, next) => {
-  res.json({
-    message: "Products Routes",
-  });
-});
-router.post("/product", (req, res, next) => {
-  res.json({
-    message: "Product Create",
-  });
-});
+const productController = require("../controllers/product.controller");
+const mainController = require("../controllers/main.controller");
 
-router.get("/product/:id", (req, res, next) => {
-  console.log("Req : ");
-  res.json({
-    message: `Read Product Id : ${req.params.id}`,
-  });
-});
+router.get("/products", productController.getProducts);
+router.get("/product/:id", productController.getByIdProduct);
+router.post("/product", productController.createProduct);
+router.delete("/product/:id", productController.deleteProduct);
+router.put("/product/:id", productController.updateProduct);
 
 module.exports = router;
