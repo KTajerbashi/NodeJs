@@ -22,6 +22,9 @@
   "homepage": "https://github.com/KTajerbashi/NodeJs#readme",
   "dependencies": {
     "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.16.1",
+    "nodemon": "^3.1.10",
+    "uuid": "^11.1.0"
   }
 }

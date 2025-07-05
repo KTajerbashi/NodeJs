@@ -1,4 +1,4 @@
-const Models = require("../common/common.models");
+const { ApiResponse, uuidv4 } = require("../common/global.using");
 
 const userController = require("./user.controller");
 
@@ -6,18 +6,18 @@ userController.users;
 
 const login = (req, res, next) => {
   const { username, password } = req.body;
-  const findUser = userController.users.find((item) => {
+  const validUser = userController.users.find((item) => {
     if (item.username === username && item.password === password) {
       return item;
     }
     return null;
   });
-  if (findUser) {
-    res.json(Models.ApiResponse.Success(findUser, "Login Success"));
+  if (validUser) {
+    res.json(ApiResponse.Success(validUser, "Login Success"));
   }
 
   res.json(
-    Models.ApiResponse.Faild(
+    ApiResponse.Faild(
       `Invalid Account (Username : "${username}" Password : "${password}") !!!`
     )
   );
@@ -27,7 +27,7 @@ const signup = (req, res, next) => {
 
   userController.users.push(model);
 
-  res.json(Models.ApiResponse.Success(model, "New User Created !!!"));
+  res.json(ApiResponse.Success(model, "New User Created !!!"));
 };
 const disactive = (req, res, next) => {};
 
