@@ -1,76 +1,73 @@
 const { ApiResponse, uuidv4 } = require("../common/global.using");
+const { ProductModel } = require("../models/product.model");
 
-let products = []; // Simulated in-memory database
+// ✅ Create
+const createProduct = async (req, res) => {
+  const { title, description, price, rate } = req.body;
 
-const createProduct = (req, res) => {
-  const { title, description } = req.body;
-
-  if (!title || !description) {
-    return res
-      .status(400)
-      .json(ApiResponse.BadRequest("Title and description are required."));
+  if (!title || !description || !price || !rate) {
+    return res.status(400).json(ApiResponse.BadRequest("Model is invalid."));
   }
 
-  const newProduct = {
-    id: uuidv4(),
-    title,
-    description,
-  };
+  const model = new ProductModel({ title, description, price, rate });
+  await model.save();
 
-  products.push(newProduct);
-
-  return res.status(201).json(ApiResponse.Success(newProduct));
+  return res.status(201).json(ApiResponse.Success(model));
 };
 
-const getProducts = (req, res) => {
-  return res.status(200).json(ApiResponse.Success(products));
+// ✅ Get All
+const getProducts = async (req, res) => {
+  const response = await ProductModel.find();
+
+  return res.status(200).json(ApiResponse.Success(response));
 };
 
-const getByIdProduct = (req, res) => {
+// ✅ Get By Id
+const getByIdProduct = async (req, res) => {
   const id = req.params.id;
-  const product = products.find((p) => p.id === id);
+  const response = await ProductModel.findById(id);
 
-  if (!product) {
+  if (!response) {
     return res
       .status(404)
       .json(ApiResponse.NotFound(`Product with ID ${id} not found.`));
   }
 
-  return res.status(200).json(ApiResponse.Success(product));
+  return res.status(200).json(ApiResponse.Success(response));
 };
 
-const deleteProduct = (req, res) => {
+// ✅ Delete
+const deleteProduct = async (req, res) => {
   const id = req.params.id;
-  const productIndex = products.findIndex((p) => p.id === id);
+  const record = await ProductModel.findByIdAndDelete(id);
 
-  if (productIndex === -1) {
+  if (record === null) {
     return res
       .status(404)
       .json(ApiResponse.NotFound(`Product with ID ${id} not found.`));
   }
-
-  const deletedProduct = products.splice(productIndex, 1);
 
   return res
     .status(200)
-    .json(ApiResponse.Success(`Deleted product ID: ${id}`, deletedProduct));
+    .json(ApiResponse.Success(`Deleted product ID: ${id}`, record));
 };
 
-const updateProduct = (req, res) => {
+// ✅ Update
+const updateProduct = async (req, res) => {
   const id = req.params.id;
-  const { title, description } = req.body;
+  const { title, description, price, rate } = req.body;
 
-  const product = products.find((p) => p.id === id);
+  const product = await ProductModel.findByIdAndUpdate(
+    id,
+    { title, description, price, rate },
+    { new: true }
+  );
 
   if (!product) {
     return res
       .status(404)
       .json(ApiResponse.NotFound(`Product with ID ${id} not found.`));
   }
-
-  if (title) product.title = title;
-  if (description) product.description = description;
-
   return res.status(200).json(ApiResponse.Success(product));
 };
 

@@ -35,8 +35,6 @@ const updateUser = async (req, res, next) => {
       { new: true } // Options
     );
 
-    console.log("Updated Record : ", record);
-
     if (!record) {
       return res
         .status(404)
@@ -65,12 +63,12 @@ const deleteUser = async (req, res, next) => {
     .status(200)
     .json(ApiResponse.Success(`Deleted user ID: ${id}`, record));
 };
-//  Get All
+// ✅ Get All
 const getUsers = async (req, res, next) => {
   const response = await UserModel.find();
   res.json(ApiResponse.Success(response));
 };
-//  Get By Id
+// ✅ Get By Id
 const getUserById = async (req, res, next) => {
   const id = req.params.id;
   const response = await UserModel.findById(id);
