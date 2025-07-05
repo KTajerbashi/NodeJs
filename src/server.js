@@ -2,22 +2,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-//  Require Routes
-const mainRoutes = require("./routes/main.routes");
-const productRoutes = require("./routes/product.routes");
-const userRoutes = require("./routes/user.routes");
-const authRoutes = require("./routes/auth.routes");
+//  Require Root Routes
+const rootRequire = require("./routes/root.routes");
 
 //  Startup Configuration
 const app = express();
 
+//  Config api
 app.use(express.json());
 
-//  Add Routes to Application
-app.use("/api/product/", productRoutes);
-app.use("/api/user/", userRoutes);
-app.use("/api/auth/", authRoutes);
-app.use("/", mainRoutes);
+//  Add Routes
+app.use(rootRequire);
 
 //  Run Application
 mongoose
