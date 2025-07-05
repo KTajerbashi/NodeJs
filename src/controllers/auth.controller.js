@@ -1,33 +1,38 @@
-const { ApiResponse, uuidv4 } = require("../common/global.using");
-
+const { ApiResponse, uuidv4, Hash } = require("../common/global.using");
+const { UserModel } = require("../models/user.model");
 const userController = require("./user.controller");
 
-userController.users;
-
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { username, password } = req.body;
-  const validUser = userController.users.find((item) => {
-    if (item.username === username && item.password === password) {
-      return item;
-    }
-    return null;
+  const validUser = await UserModel.findOne({
+    username: username,
   });
-  if (validUser) {
-    res.json(ApiResponse.Success(validUser, "Login Success"));
+  if (validUser === null) {
+    res
+      .status(404)
+      .json(
+        ApiResponse.NotFound(
+          `Invalid Account (Username : "${username}" Password : "${password}") !!!`
+        )
+      );
+  }
+  const validPass = await Hash.IsValidPassword(password, validUser.password);
+
+  if (!validPass) {
+    res.json(ApiResponse.Faild(validUser, "Password is not valid !!!"));
   }
 
-  res.json(
-    ApiResponse.Faild(
-      `Invalid Account (Username : "${username}" Password : "${password}") !!!`
-    )
-  );
+  res.json(ApiResponse.Success(validUser, "Login Success"));
 };
-const signup = (req, res, next) => {
-  const model = userController.userModel(req.body);
+const signup = async (req, res, next) => {
+  const { username, password, name, family } = req.body;
+  const hashPass = await Hash.Encrypt(password);
+  const record = new UserModel({ username, password: hashPass, name, family });
 
-  userController.users.push(model);
+  await record.save();
 
-  res.json(ApiResponse.Success(model, "New User Created !!!"));
+  return res.status(201).json(ApiResponse.Success(record));
+  // res.json(ApiResponse.Success(record, "New User Created !!!"));
 };
 const disactive = (req, res, next) => {};
 

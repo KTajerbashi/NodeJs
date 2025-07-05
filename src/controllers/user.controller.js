@@ -1,10 +1,11 @@
-const { ApiResponse, uuidv4 } = require("../common/global.using");
+const { ApiResponse, Hash } = require("../common/global.using");
 const { validationResult } = require("express-validator");
 const { UserModel } = require("../models/user.model");
 
-const insertModel = (body) => {
+const insertModel = async (body) => {
   const { id, username, password, name, family } = body;
-  const model = new UserModel({ username, password, name, family });
+  const hashPass = await Hash.Encrypt(password);
+  const model = new UserModel({ username, password: hashPass, name, family });
   return model;
 };
 
@@ -14,7 +15,7 @@ const createUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     res.status(422).json(ApiResponse.Faild(errors, "Validation Errors !!!"));
   }
-  const model = insertModel(req.body);
+  const model = await insertModel(req.body);
   await model.save();
   res.json(ApiResponse.Success(model));
 };
