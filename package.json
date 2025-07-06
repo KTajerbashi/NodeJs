@@ -1,0 +1,35 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Application With Node Js , React , MongoDb",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"nodemon src/server.js\" \"tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch\"",
+    "build": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --minify",
+    "run": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KTajerbashi/NodeJs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/KTajerbashi/NodeJs/issues"
+  },
+  "homepage": "https://github.com/KTajerbashi/NodeJs#readme",
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-ejs-layouts": "^2.5.1",
+    "mongoose": "^8.16.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10",
+    "tailwindcss": "^4.1.11"
+  }
+}
