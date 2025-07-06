@@ -1,8 +1,6 @@
-const { ApiResult } = require("../../../common/global.using");
-
-const loadDashboard = async (req, res, next) => {
+const users = (req, res, next) => {
   try {
-    res.render("index", {
+    res.render("dashboard/dashboard_view", {
       title: "Dashboard",
       content: "This goes in the body",
     });
@@ -15,14 +13,7 @@ const loadDashboard = async (req, res, next) => {
       },
     });
   }
-  // res.json(ApiResult.Success("loadDashboard"));
 };
-
-const index = (req, res, next) => {
-  res.redirect("/dashboard");
-};
-
 module.exports = {
-  loadDashboard,
-  index,
+  users,
 };
