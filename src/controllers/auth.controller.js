@@ -1,4 +1,9 @@
-const { ApiResponse, uuidv4, Hash } = require("../common/global.using");
+const {
+  ApiResponse,
+  uuidv4,
+  Hash,
+  TokenExtensions,
+} = require("../common/global.using");
 const { UserModel } = require("../models/user.model");
 const userController = require("./user.controller");
 
@@ -22,7 +27,19 @@ const login = async (req, res, next) => {
     res.json(ApiResponse.Faild(validUser, "Password is not valid !!!"));
   }
 
-  res.json(ApiResponse.Success(validUser, "Login Success"));
+  const token = TokenExtensions.GenerateToken({
+    email: validUser.email,
+  });
+
+  res.json(
+    ApiResponse.Success(
+      {
+        token: token,
+        user: validUser,
+      },
+      "Login Success"
+    )
+  );
 };
 const signup = async (req, res, next) => {
   const { username, password, name, family } = req.body;
@@ -34,10 +51,26 @@ const signup = async (req, res, next) => {
   return res.status(201).json(ApiResponse.Success(record));
   // res.json(ApiResponse.Success(record, "New User Created !!!"));
 };
+
+const isValidToken = async (req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const tokenVerify = TokenExtensions.VerifyToken(token);
+  res.json(ApiResponse.Success(tokenVerify));
+};
+const isAuthorize = async (req, res, next) => {
+  res.json(ApiResponse.Success(true));
+};
+const isAuthenticated = async (req, res, next) => {
+  res.json(ApiResponse.Success(true));
+};
+
 const disactive = (req, res, next) => {};
 
 module.exports = {
   login,
   signup,
   disactive,
+  isValidToken,
+  isAuthenticated,
+  isAuthorize,
 };

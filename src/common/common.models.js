@@ -11,6 +11,9 @@ module.exports.ApiResponse = class ApiResponse {
   static Faild(data, message = "Internal Server") {
     return new ApiResponse(data, message, 500);
   }
+  static UnAuthorized(message = "UnAuthorized") {
+    return new ApiResponse(false, message, 401);
+  }
   static NotFound(data, message = "Not Found") {
     return new ApiResponse(data, message, 404);
   }
