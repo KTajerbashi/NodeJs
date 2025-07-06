@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title || 'E-Commerce Dashboard' %></title>
+    <link href="/css/layout.style.css" rel="stylesheet" />
+    <link href="/css/main.style.css" rel="stylesheet" />
+    <link href="/css/tailwind/output.css" rel="stylesheet" />
+    <link href="/css/all.min.css" rel="stylesheet" />
+    <link href="/css/matrial-icon/matrial.css" rel="stylesheet" />
+    <!-- For dashboard charts -->
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <!-- Dashboard Layout Structure -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <%- include('partials/dashboard/sidebar') %>
+
+      <!-- Main Content -->
+      <div class="flex-1 overflow-auto">
+        <!-- Top Navigation -->
+        <%- include('partials/dashboard/header') %>
+
+        <!-- Dynamic Content -->
+        <div id="main-container">
+          <main id="main-content-body" class="p-6">
+            <%- typeof body !== 'undefined' ? body : '' %>
+          </main>
+        </div>
+      </div>
+    </div>
+    <!-- Top Navigation -->
+    <%- include('partials/dashboard/footer') %>
+  </body>
+</html>

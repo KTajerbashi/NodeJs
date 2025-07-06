@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind Sidebar</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="w-64 bg-white shadow-md transform transition-all duration-300 ease-in-out fixed md:relative h-full z-40"
+        id="sidebar"
+      >
+        <!-- Sidebar Header -->
+        <div class="p-4 border-b text-center">
+          <h1 class="text-xl font-bold text-blue-800">Tajerbashi</h1>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="p-4">
+          <div class="space-y-2">
+            <!-- Dashboard Link -->
+            <a
+              href="/"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">dashboard</span>
+              Dashboard
+            </a>
+
+            <!-- Projects Link -->
+            <a
+              href="/projects"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">cases</span>
+              Projects
+            </a>
+
+            <!-- Team Link -->
+            <a
+              href="/team"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">diversity_3</span>
+              Team
+            </a>
+
+            <!-- Calendar Link -->
+            <a
+              href="/calendar"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">calendar_month</span>
+              Calendar
+            </a>
+
+            <!-- Documents Link -->
+            <a
+              href="/documents"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">article</span>
+              Documents
+            </a>
+          </div>
+
+          <!-- Divider -->
+          <div class="border-t my-4"></div>
+
+          <!-- Secondary Navigation -->
+          <div class="space-y-2">
+            <a
+              href="/settings"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">settings</span>
+              Settings
+            </a>
+
+            <a
+              href="/profile"
+              class="flex items-center side-item-center p-3 rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              <span class="material-icons">account_circle</span>
+              Profile
+            </a>
+          </div>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="absolute bottom-0 w-full p-4 border-t">
+          <div class="flex items-center side-item-center">
+            <img
+              class="w-8 h-8 rounded-full mr-3"
+              src="/images/profile.jpg"
+              alt="User avatar"
+            />
+            <div>
+              <p class="text-sm font-medium text-gray-700">Tajerbashi</p>
+              <p class="text-xs text-gray-500">Admin</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <script>
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("hidden");
+        sidebar.classList.toggle("fixed");
+      }
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener("click", function (event) {
+        const sidebar = document.getElementById("sidebar");
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuButton = event.target.closest(
+          '[onclick="toggleSidebar()"]'
+        );
+
+        if (
+          !isClickInsideSidebar &&
+          !isClickOnMenuButton &&
+          window.innerWidth < 768
+        ) {
+          sidebar.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
