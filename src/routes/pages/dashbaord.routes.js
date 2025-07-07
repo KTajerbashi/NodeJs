@@ -5,7 +5,6 @@ const dashboardController = require("../../usecases/dashboard/controllers/dashbo
 
 router.get("/dashboard", dashboardController.dashboard);
 router.get("/projects", dashboardController.projects);
-router.get("/team", dashboardController.team);
 router.get("/calendar", dashboardController.calendar);
 router.get("/documents", dashboardController.documents);
 router.get("/", dashboardController.index);
