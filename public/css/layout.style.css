@@ -1,20 +1,76 @@
+em {
+  color: #ff33aa;
+}
+
+/* Card Container */
 .app-card {
   padding: 20px;
   font-family: "Segoe UI", sans-serif;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
-.app-content {
+
+/* Header */
+.app-card-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Card Content */
+.app-card-content {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
   gap: 20px;
-  align-content: center;
   justify-content: space-around;
   align-items: stretch;
-  box-shadow: -1px 1px 10px 1px #8f8f8f;
-  border: 1px solid #ababab;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  margin: 10px 0;
+}
+
+/* Card Item Example (for each product or item inside card) */
+.app-card-item {
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 15px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+.app-card-item:hover {
+  transform: translateY(-5px);
+}
+
+.app-float-right {
+  float: right;
+}
+
+.app-float-left {
+  float: left;
+}
+
+/* Footer */
+.app-card-footer {
+  margin-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+  text-align: right;
+  color: #666;
+  font-size: 0.9rem;
 }
 
 ::-webkit-scrollbar {
@@ -112,7 +168,8 @@
 /* Base Button */
 .app-btn {
   padding: 6px 12px;
-  min-width: 100px;
+  margin: 2px 5px;
+  min-width: 130px;
   border: 1px solid transparent;
   border-radius: 5px;
   text-align: center;
