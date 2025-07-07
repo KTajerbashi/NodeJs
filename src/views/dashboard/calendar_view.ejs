@@ -1,3 +1,17 @@
 <div class="page-container">
-  <div class="page-content">Calendar Page</div>
+  <div class="page-content">
+    <% if(events.length > 0) {%>
+    <div class="app-grid">
+      <% for(let event of events){ %>
+      <div class="app-width-1-1"><%= event.title %></div>
+      <% } %>
+    </div>
+    <% }else{ %>
+    <div>
+      <strong>
+        <em> Event Not Founded : <%= events.length%> </em>
+      </strong>
+    </div>
+    <% } %>
+  </div>
 </div>

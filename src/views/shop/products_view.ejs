@@ -8,28 +8,24 @@
     <span class="page-action">⚙️</span>
   </div>
   <div class="page-content">
-    <div class="app-card">
-      <div class="app-content">
-        <div class="app-grid">
-          <% for(let item of products){ %>
-          <div class="app-width-1-4">
-            <div class="product-card">
-              <h2 class="product-title"><%= item.title %></h2>
-              <p class="product-description"><%= item.description %></p>
-              <div class="product-details">
-                <span class="product-price">$<%= item.price %></span>
-                <span class="product-rate">⭐ <%= item.rate %></span>
-                <button class="app-btn app-btn-primary app-btn-hover">
-                  <span class="material-icons">shopping_cart</span>
+    <div class="app-grid">
+      <% for(let item of products){ %>
+      <div class="app-width-1-4">
+        <div class="product-card">
+          <h2 class="product-title"><%= item.title %></h2>
+          <p class="product-description"><%= item.description %></p>
+          <div class="product-details">
+            <span class="product-price">$<%= item.price %></span>
+            <span class="product-rate">⭐ <%= item.rate %></span>
+            <button class="app-btn app-btn-primary app-btn-hover">
+              <span class="material-icons">shopping_cart</span>
 
-                  <span>Add To Cart</span>
-                </button>
-              </div>
-            </div>
+              <span>Add To Cart</span>
+            </button>
           </div>
-          <% } %>
         </div>
       </div>
+      <% } %>
     </div>
   </div>
   <div class="page-footer">Copyright © 2020 All Rights Reserved</div>

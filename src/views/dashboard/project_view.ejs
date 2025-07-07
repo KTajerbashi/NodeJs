@@ -1,3 +1,16 @@
 <div class="page-container">
-  <div class="page-content">Project Page</div>
+  <div class="page-header">
+    <button class="app-btn app-btn-success">Add Product</button>
+  </div>
+  <div class="page-content">
+    <% if(projects.length > 0){ %> <% for(let item of projects) { %>
+    <p><%= item.name %></p>
+    <% } %> <% } else { %>
+    <strong>
+      <em> Project Not Founded </em>
+    </strong>
+    <% } %>
+  </div>
+
+  <div class="page-footer">Projects Founded : <%= projects.length %></div>
 </div>
