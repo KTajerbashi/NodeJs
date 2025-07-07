@@ -1,10 +1,16 @@
-const { ApiResult } = require("../../../common/global.using");
+const { EventModel } = require("../models/event.model");
+const { ProjectModel } = require("../models/project.model");
 
-const dashboard = (req, res, next) => {
+const dashboard = async (req, res, next) => {
   try {
+    const projects = await ProjectModel.find();
+    const events = await EventModel.find();
     res.render("dashboard/dashboard_view", {
       title: "Dashboard",
-      content: "This goes in the body",
+      model: {
+        projectCount: projects.length,
+        eventCount: events.length,
+      },
     });
   } catch (err) {
     console.error("Dashboard error:", err);
@@ -16,11 +22,12 @@ const dashboard = (req, res, next) => {
     });
   }
 };
-const projects = (req, res, next) => {
+const projects = async (req, res, next) => {
   try {
+    const projects = await ProjectModel.find();
     res.render("dashboard/project_view", {
-      title: "Dashboard",
-      content: "This goes in the body",
+      title: "Projects",
+      projects: projects ?? [],
     });
   } catch (err) {
     console.error("Dashboard error:", err);
@@ -32,27 +39,12 @@ const projects = (req, res, next) => {
     });
   }
 };
-const team = (req, res, next) => {
+const calendar = async (req, res, next) => {
   try {
-    res.render("dashboard/team_view", {
-      title: "Dashboard",
-      content: "This goes in the body",
-    });
-  } catch (err) {
-    console.error("Dashboard error:", err);
-    res.status(500).render("error", {
-      error: {
-        message: err.message,
-        stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
-      },
-    });
-  }
-};
-const calendar = (req, res, next) => {
-  try {
+    const events = await EventModel.find();
     res.render("dashboard/calendar_view", {
-      title: "Dashboard",
-      content: "This goes in the body",
+      title: "Calendar & Events",
+      events: events ?? [],
     });
   } catch (err) {
     console.error("Dashboard error:", err);
@@ -89,7 +81,6 @@ module.exports = {
   dashboard,
   index,
   projects,
-  team,
   calendar,
   documents,
 };
