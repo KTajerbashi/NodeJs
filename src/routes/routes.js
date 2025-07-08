@@ -14,6 +14,8 @@ router.use("/shop", shopRoutes);
 
 //  Dashboard
 const dashboarRoutes = require("./pages/dashbaord.routes");
+const dashboarApiRoutes = require("./apis/dashboard/root.routes");
+router.use("/api", dashboarApiRoutes);
 router.use("/", dashboarRoutes);
 
 router.use(authMiddleware);
