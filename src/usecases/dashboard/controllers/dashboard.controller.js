@@ -1,5 +1,5 @@
 const { EventModel } = require("../models/event.model");
-const { ProjectModel } = require("../models/project.model");
+const { ProjectModel } = require("../../commerce/models/project.model");
 
 const dashboard = async (req, res, next) => {
   try {
