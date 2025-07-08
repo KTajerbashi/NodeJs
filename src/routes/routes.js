@@ -3,27 +3,21 @@ const router = express.Router();
 const path = require("path");
 const authMiddleware = require("../middlewares/auth.middleware");
 
-//  Pages
 //  Security
-const securityRoutes = require("./pages/security.routes");
-router.use("/security", securityRoutes);
+router.use("/security", require("./apps/security/security.routes"));
 
 //  Shop
-const shopRoutes = require("./pages/shop.routes");
-router.use("/shop", shopRoutes);
+router.use("/shop", require("./apps/shop/shop.routes"));
 
 //  Dashboard
-const dashboarRoutes = require("./pages/dashbaord.routes");
-const dashboarApiRoutes = require("./apis/dashboard/root.routes");
-router.use("/api", dashboarApiRoutes);
-router.use("/", dashboarRoutes);
+router.use("/api", require("./apis/dashboard/root.routes"));
+router.use("/", require("./apps/dashboard/dashbaord.routes"));
 
 router.use(authMiddleware);
 
 //  Apis
 //  Security
-const apiRoutes = require("./apis/routes");
-router.use("/api", apiRoutes);
+router.use("/api", require("./apis/routes"));
 
 // 🔴 404 Handler (must come after all other routes)
 router.use((req, res, next) => {

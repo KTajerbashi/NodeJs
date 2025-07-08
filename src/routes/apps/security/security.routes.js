@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const userController = require("../../usecases/security/controllers/user/user.controller");
-const roleController = require("../../usecases/security/controllers/role/role.controller");
+const userController = require("../../../usecases/security/controllers/user/user.controller");
+// const roleController = require("../../usecases/security/controllers/role/role.controller");
 
 router.get("/team", userController.team);
 router.get("/users", userController.users);
