@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const securityRoutes = require("./security/root.routes");
-const shopRoutes = require("./shop/root.routes");
-const dashboardRoutes = require("./shop/root.routes");
+const commerceRoutes = require("./commerce/routes");
+const securityRoutes = require("./security/routes");
+const shopRoutes = require("./shop/routes");
+const dashboardRoutes = require("./dashboard/routes");
 
+router.use("/commerce", commerceRoutes);
 router.use("/security", securityRoutes);
 router.use("/shop", shopRoutes);
+router.use("/", dashboardRoutes);
 
 module.exports = router;
