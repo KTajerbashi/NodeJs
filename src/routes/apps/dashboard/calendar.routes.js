@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const controller = require("../../../usecases/dashboard/controllers/dashboard.controller");
+const controller = require("../../../usecases/dashboard/controllers/calendar.controller");
 
-router.get("/", controller.calendar);
+router.get("/calendar", controller.index);
 
 module.exports = router;

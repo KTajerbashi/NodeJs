@@ -1,11 +1,12 @@
-const { ProjectModel } = require("../../models/project.model");
+const { EventModel } = require("../models/event.model");
+const { ProjectModel } = require("../../commerce/models/project.model");
 
 const index = async (req, res, next) => {
   try {
-    const projects = await ProjectModel.find();
-    res.render("dashboard/project_view", {
-      title: "Projects",
-      projects: projects ?? [],
+    const events = await EventModel.find();
+    res.render("dashboard/calendar_view", {
+      title: "Calendar & Events",
+      events: events ?? [],
     });
   } catch (err) {
     console.error("Dashboard error:", err);

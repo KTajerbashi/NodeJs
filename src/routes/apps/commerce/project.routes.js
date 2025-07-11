@@ -3,6 +3,6 @@ const router = express.Router();
 
 const controller = require("../../../usecases/commerce/controllers/project/project.controller");
 
-router.get("/", controller.projects);
+router.get("/projects", controller.index);
 
 module.exports = router;
