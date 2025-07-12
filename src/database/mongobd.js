@@ -5,11 +5,11 @@ module.exports = class Database {
   constructor() {
     this.startup();
   }
-  static startup(callback) {
+  static async startup(callback) {
     const DB_URI =
       process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/nodeapp";
 
-    mongoose
+    await mongoose
       .connect(DB_URI, {
         serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
       })
