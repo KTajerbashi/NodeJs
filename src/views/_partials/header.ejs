@@ -1,0 +1,33 @@
+<header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+  <div title="goto profile" class="text-xl font-bold">
+    <a href="/profile" class="border px-[20px] py-[5px]">Tajerbashi</a>
+  </div>
+  <nav>
+    <ul class="flex space-x-6">
+      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
+        <a href="/" class="text-yellow-200 hover:text-yellow-400">Messages</a>
+      </li>
+      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
+        <a href="/" class="text-yellow-200 hover:text-yellow-400"
+          >Notification</a
+        >
+      </li>
+
+      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
+        <a href="/" class="text-yellow-200 hover:text-yellow-400">Logout</a>
+      </li>
+      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
+        <a href="/" class="text-yellow-200 hover:text-yellow-400">Login</a>
+      </li>
+      <li
+        id="profile"
+        class="<%= activePage === 'home' ? 'font-bold underline' : '' %>"
+      >
+        <img class="img-profile" src="/img/profile.jpg" alt="تصویر" />
+      </li>
+      <li class="<%= activePage === 'about' ? 'font-bold underline' : '' %>">
+        <a href="/about" class="text-yellow-200 hover:text-yellow-400">About</a>
+      </li>
+    </ul>
+  </nav>
+</header>

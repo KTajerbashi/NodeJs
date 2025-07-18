@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | Node Store</title>
+    <link href="/css/_layout.style.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/all.min.css" rel="stylesheet" />
+    <%- include('../_partials/head'); %>
+  </head>
+  <body class="bg-gray-50">
+    <%- include('../_partials/header'); %>
+
+    <div class="flex min-h-screen">
+      <%- include('../_partials/sidebar'); %>
+
+      <main class="flex-1 p-3"><%- body %></main>
+    </div>
+
+    <%- include('../_partials/footer'); %>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
