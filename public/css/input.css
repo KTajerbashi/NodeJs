@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Custom styles */
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
+
+/* Traditional CSS still works too */
+.special-text {
+  font-family: "CustomFont", sans-serif;
+  color: #123456;
+}
+
+.error-container {
+  background: rgb(240, 240, 240);
+  position: fixed;
+  z-index: 10000000;
+  height: 100vh;
+  width: 100vw;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
