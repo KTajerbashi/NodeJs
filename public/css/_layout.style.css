@@ -11,6 +11,17 @@ body {
   display: flex;
   justify-content: space-between;
 }
+#profile {
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.img-profile {
+  border-radius: 50%;
+}
 
 .nav ul {
   list-style: none;
