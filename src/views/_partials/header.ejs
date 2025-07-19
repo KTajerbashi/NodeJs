@@ -4,25 +4,28 @@
   </div>
   <nav>
     <ul class="flex space-x-6">
-      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
-        <a href="/" class="text-yellow-200 hover:text-yellow-400">Messages</a>
+      <li class="<%= activePage === 'messages' ? 'font-bold underline' : '' %>">
+        <a href="/messages" class="text-yellow-200 hover:text-yellow-400"
+          >Messages</a
+        >
       </li>
-      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
-        <a href="/" class="text-yellow-200 hover:text-yellow-400"
+      <li
+        class="<%= activePage === 'notification' ? 'font-bold underline' : '' %>"
+      >
+        <a href="/notification" class="text-yellow-200 hover:text-yellow-400"
           >Notification</a
         >
       </li>
 
-      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
-        <a href="/" class="text-yellow-200 hover:text-yellow-400">Logout</a>
+      <li class="<%= activePage === 'logout' ? 'font-bold underline' : '' %>">
+        <a href="/logout" class="text-yellow-200 hover:text-yellow-400"
+          >Logout</a
+        >
       </li>
-      <li class="<%= activePage === 'home' ? 'font-bold underline' : '' %>">
-        <a href="/" class="text-yellow-200 hover:text-yellow-400">Login</a>
+      <li class="<%= activePage === 'login' ? 'font-bold underline' : '' %>">
+        <a href="/login" class="text-yellow-200 hover:text-yellow-400">Login</a>
       </li>
-      <li
-        id="profile"
-        class="<%= activePage === 'home' ? 'font-bold underline' : '' %>"
-      >
+      <li id="profile">
         <img class="img-profile" src="/img/profile.jpg" alt="تصویر" />
       </li>
       <li class="<%= activePage === 'about' ? 'font-bold underline' : '' %>">
