@@ -21,7 +21,7 @@ Application.startApp(async (app) => {
   });
 
   app.use(routes);
-  app.use(common_routes);
+  // app.use(common_routes);
   // Catch 404 and forward to error handler
   app.use(notFound);
   // Error handler
