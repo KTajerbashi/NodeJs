@@ -16,6 +16,7 @@ const dashboard = (req, res) => {
     activeUsers: 15,
   });
 };
+
 const profile = (req, res) => {
   res.render("account/profile", {
     title: "Profile",
