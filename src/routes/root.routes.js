@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/layout.controller");
-router.use(require("./auth.routes"));
+router.use(require("./security/auth.routes"));
 
-router.get("/", controller.index);
-router.get("/dashboard", controller.dashboard);
-router.get("/profile", controller.profile);
+// router.use(require("./useCases/product.routes"));
+// router.use(require("./useCases/report.routes"));
+// router.use(require("./useCases/role.routes"));
+// router.use(require("./useCases/system.routes"));
+// router.use(require("./useCases/user.routes"));
+
+router.use(require("./common/common.routes"));
 
 module.exports = router;
