@@ -1,4 +1,4 @@
-const express = require("express");
+const { express } = require("../global.using");
 const app = express();
 const PORT = 3000;
 

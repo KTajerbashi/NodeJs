@@ -1,10 +1,4 @@
-const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
-const path = require("path");
-console.log("=====");
-console.log(path.join(__dirname, "../../public"));
-console.log(path.join(__dirname, "../views"));
-console.log("=====");
+const { express, expressLayouts, path } = require("../global.using");
 module.exports = class ViewConfiguration {
   static handler = (app) => {
     app.use(expressLayouts);
