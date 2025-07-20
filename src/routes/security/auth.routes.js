@@ -3,13 +3,19 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../../controllers/auth.controller");
 
-router.get("/signup", authController.signupView);
+router.get("/signup", authController.renderSignupView);
 router.post("/signup", authController.signup);
 
-router.get("/login", authController.loginView);
+router.get("/login", authController.renderLoginView);
 router.post("/login", authController.login);
+
 router.get("/logout", authController.logout);
 
+router.get("/forgot-password", authController.renderForgotPasswordView);
+router.post("/forgot-password", authController.forgotPassword);
+
+router.get("/reset-password/:token", authController.renderResetPasswordView);
+router.post("/reset-password/:token", authController.resetPassword);
 // Protected route example
 router.get("/is-auth", authController.protect, async (req, res) => {
   const username = "tajerbashi"; // replace with your actual username
@@ -47,7 +53,7 @@ router.get("/test", async (req, res) => {
 
 router.get("/test-bcrypt", async (req, res) => {
   const password = "123123123";
-  const hash = "$2b$12$hhsOef93Ga4krzgTGtUbuOjeCbkyCCuUVjg2MAStYVyMkSpSEbZXa";
+  const hash = await bcrypt.hash(password, 12);
   const match = await bcrypt.compare(password, hash);
 
   res.json({

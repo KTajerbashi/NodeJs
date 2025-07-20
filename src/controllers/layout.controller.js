@@ -21,6 +21,14 @@ const profile = (req, res) => {
   res.render("account/profile", {
     title: "Profile",
     activePage: "profile",
+    model: res.locals.auth,
+  });
+};
+
+const about = (req, res) => {
+  res.render("about/index", {
+    title: "About",
+    activePage: "about",
     userCount: 100,
     activeUsers: 15,
   });
@@ -30,4 +38,5 @@ module.exports = {
   index,
   dashboard,
   profile,
+  about,
 };

@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const { router } = require("../global.using");
+
 router.use(require("./security/auth.routes"));
 
 // router.use(require("./useCases/product.routes"));

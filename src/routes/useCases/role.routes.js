@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const { router } = require("../../global.using");
 
 const controller = require("../../controllers/role.controller");
 

@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const { router } = require("../../global.using");
 const controller = require("../../controllers/layout.controller");
 
 router.get("/dashboard", controller.dashboard);
 router.get("/profile", controller.profile);
+router.get("/about", controller.about);
 
 // For testing purposes only - remove in production
 router.get("/test-404", (req, res) => {
