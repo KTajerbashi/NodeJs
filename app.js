@@ -7,10 +7,15 @@ const connectDB = require("./src/configs/database.config");
 const MiddlewarePipes = require("./src/configs/pipline.config");
 const ViewConfiguration = require("./src/configs/view.config");
 const { notFound, serverError } = require("./src/middlewares/errorHandler");
+// app.js
+const authController = require("./src/controllers/auth.controller");
 Application.startApp(async (app) => {
   await connectDB();
   MiddlewarePipes.configuration(app);
   ViewConfiguration.handler(app);
+
+  // Apply to all routes
+  app.use(authController.isLoggedIn);
 
   // Add this before your routes
   app.use((req, res, next) => {

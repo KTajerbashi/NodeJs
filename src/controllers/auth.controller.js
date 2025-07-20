@@ -1,9 +1,12 @@
 const User = require("../models/user.model");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { jwtSecret } = require("../configs/env.config");
 const AppError = require("../utilities/appError"); // You'll need to create this
 
+// Helper functions
 const signToken = (id) => {
   return jwt.sign({ id }, jwtSecret, {
     expiresIn: process.env.JWT_EXPIRES_IN || "1d",
@@ -24,14 +27,16 @@ const createSendToken = (user, statusCode, req, res) => {
   }
 
   // For server-side rendered views
-  res.cookie("jwt", token, {
+  const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      Date.now() +
+        (process.env.JWT_COOKIE_EXPIRES_IN || 30) * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-  });
+  };
 
+  res.cookie("jwt", token, cookieOptions);
   res.status(statusCode).redirect("/dashboard");
 };
 
@@ -61,30 +66,64 @@ const handleAuthError = (err, req, res, next) => {
   req.flash("error", err.message); // Requires express-flash
   res.redirect(redirectUrl);
 };
-exports.signupView = async (req, res, next) => {
+
+exports.signupView = (req, res) => {
   res.render("auth/signup", {
     layout: "_layouts/_layout",
-    error: req.query.error,
+    title: "Create Account",
+    errors: req.flash("errors"),
+    formData: req.flash("formData")[0] || {},
   });
 };
 
+// Signup Controller
 exports.signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, passwordConfirm } = req.body;
 
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      return next(
-        new AppError("User with that email or username already exists", 400)
-      );
+    // Validate input
+    if (password !== passwordConfirm) {
+      req.flash("error", "Passwords do not match");
+      req.flash("formData", { username, email });
+      return res.redirect("/signup");
     }
+    console.log("Password :", password);
+    // Create user with hashed password
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = await User.create({ username, email, password });
+    console.log("HashedPassword :", hashedPassword);
+    const newUser = await User.create({
+      username,
+      email,
+      password: password,
+    });
+
+    console.log("New user created successfully:", {
+      username: newUser.username,
+      email: newUser.email,
+    });
+
+    // Auto-login after signup
     createSendToken(newUser, 201, req, res);
   } catch (err) {
-    next(err);
+    console.error("Signup error:", err);
+
+    // Handle duplicate key errors
+    if (err.code === 11000) {
+      const field = Object.keys(err.keyPattern)[0];
+      req.flash("error", `${field} already exists`);
+      req.flash("formData", {
+        username: req.body.username,
+        email: req.body.email,
+      });
+      return res.redirect("/signup");
+    }
+
+    req.flash("error", "Something went wrong during signup");
+    res.redirect("/signup");
   }
 };
+
 exports.loginView = async (req, res, next) => {
   res.render("auth/login", {
     layout: "_layouts/_layout",
@@ -92,24 +131,41 @@ exports.loginView = async (req, res, next) => {
   });
 };
 
+// login controller
 exports.login = async (req, res, next) => {
   try {
-    const { username, password, remember } = req.body;
+    const { username, password } = req.body;
 
+    // 1) Check if username and password exist
     if (!username || !password) {
       req.flash("error", "Please provide username and password");
       return res.redirect("/login");
     }
 
+    // 2) Find user with password
     const user = await User.findOne({ username }).select("+password");
 
-    if (!user || !(await user.correctPassword(password, user.password))) {
+    if (!user) {
       req.flash("error", "Incorrect username or password");
       return res.redirect("/login");
     }
 
+    console.log("=========>< user.password : ", user.password);
+    console.log("=========>< password : ", password);
+
+    // 3) Verify password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    console.log("Password comparison result:", isPasswordCorrect);
+
+    if (!isPasswordCorrect) {
+      req.flash("error", "Incorrect username or password");
+      return res.redirect("/login");
+    }
+
+    // 4) Successful login
     createSendToken(user, 200, req, res);
   } catch (err) {
+    console.error("Login error:", err);
     req.flash("error", "An error occurred during login");
     res.redirect("/login");
   }
@@ -179,6 +235,42 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
   res.redirect("/login");
+};
+
+// auth.controller.js
+exports.isLoggedIn = async (req, res, next) => {
+  try {
+    console.log("Cookie =>>>>>>>>>>>>", req.cookies.jwt);
+    if (req.cookies.jwt) {
+      // 1) Verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        res.locals.isLoggedIn = false;
+        return next();
+      }
+
+      // 3) There is a logged in user
+      res.locals.role = currentUser.role;
+      res.locals.isLoggedIn = true;
+      res.locals.username = currentUser.username.toUpperCase();
+
+      req.user = currentUser;
+      return next();
+    }
+    res.locals.isLoggedIn = false;
+    res.locals.role = "";
+    res.locals.username = "";
+    next();
+  } catch (err) {
+    res.locals.isLoggedIn = false;
+    next();
+  }
 };
 
 // Error handling middleware (add this at the end of your middleware stack)

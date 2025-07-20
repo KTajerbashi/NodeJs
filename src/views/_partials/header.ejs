@@ -1,9 +1,22 @@
 <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+  <% if (isLoggedIn) { %>
   <div title="goto profile" class="text-xl font-bold">
-    <a href="/profile" class="border px-[20px] py-[5px]">Tajerbashi</a>
+    <a href="/profile" class="border px-[20px] py-[5px]">
+      <%= isLoggedIn ? username : '' %> ( <%=role%> )
+    </a>
   </div>
+  <% } else {%>
+  <div
+    class="border border-[#eaa] px-[20px] py-[5px] rounded text-xl text-[#ee1] font-bold"
+  >
+    Node Application
+  </div>
+  <% } %>
   <nav>
     <ul class="flex space-x-6">
+      <% if (isLoggedIn) { %>
+
+      <!-- Show these when logged in -->
       <li class="<%= activePage === 'messages' ? 'font-bold underline' : '' %>">
         <a href="/messages" class="text-yellow-200 hover:text-yellow-400"
           >Messages</a
@@ -17,19 +30,29 @@
         >
       </li>
 
-      <li class="<%= activePage === 'logout' ? 'font-bold underline' : '' %>">
-        <a href="/logout" class="text-yellow-200 hover:text-yellow-400"
-          >Logout</a
-        >
+      <li id="profile">
+        <img class="img-profile" src="/img/profile.jpg" alt="Profile" />
       </li>
+      <% } else { %>
+      <!-- Show these when logged out -->
       <li class="<%= activePage === 'login' ? 'font-bold underline' : '' %>">
         <a href="/login" class="text-yellow-200 hover:text-yellow-400">Login</a>
       </li>
-      <li id="profile">
-        <img class="img-profile" src="/img/profile.jpg" alt="تصویر" />
+      <li class="<%= activePage === 'signup' ? 'font-bold underline' : '' %>">
+        <a href="/signup" class="text-yellow-200 hover:text-yellow-400"
+          >Signup</a
+        >
       </li>
+      <% } %>
+      <!-- Show this regardless of login status -->
       <li class="<%= activePage === 'about' ? 'font-bold underline' : '' %>">
         <a href="/about" class="text-yellow-200 hover:text-yellow-400">About</a>
+      </li>
+      <li
+        title="sign out"
+        class="<%= activePage === 'logout' ? 'font-bold underline' : '' %> border border-[#eee] px-[3px] rounded-[10px] pointer hover:bg-[red] hover:text-[wheat]"
+      >
+        <a href="/logout" class="text-yellow-200 hover:text-yellow-400">🔚</a>
       </li>
     </ul>
   </nav>
