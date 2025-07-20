@@ -1,8 +1,8 @@
 <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
   <% if (isLoggedIn) { %>
   <div title="goto profile" class="text-xl font-bold">
-    <a href="/profile" class="border px-[20px] py-[5px]">
-      <%= isLoggedIn ? username : '' %> ( <%=role%> )
+    <a href="/profile" class="border rounded hover:pointer px-[20px] py-[5px]">
+      <%= isLoggedIn ? username : '' %> (<%= isLoggedIn ? role : '' %>)
     </a>
   </div>
   <% } else {%>
@@ -48,12 +48,14 @@
       <li class="<%= activePage === 'about' ? 'font-bold underline' : '' %>">
         <a href="/about" class="text-yellow-200 hover:text-yellow-400">About</a>
       </li>
+      <% if(isLoggedIn){ %>
       <li
         title="sign out"
         class="<%= activePage === 'logout' ? 'font-bold underline' : '' %> border border-[#eee] px-[3px] rounded-[10px] pointer hover:bg-[red] hover:text-[wheat]"
       >
         <a href="/logout" class="text-yellow-200 hover:text-yellow-400">🔚</a>
       </li>
+      <% } %>
     </ul>
   </nav>
 </header>

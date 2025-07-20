@@ -1,5 +1,153 @@
-<h1>Profile</h1>
-<div class="stats">
-  <div class="stat-card">Total Users: <%= userCount %></div>
-  <div class="stat-card">Active Now: <%= activeUsers %></div>
+<div class="page-container">
+  <div class="page-content">
+    <div class="min-h-screen bg-gray-50 p-6">
+      <!-- Action Buttons Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <button
+          class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg flex items-center justify-center transition"
+        >
+          <i class="fa fa-envelope mr-2"></i> Confirmation Email
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-lg flex items-center justify-center transition"
+        >
+          <i class="fa fa-pencil mr-2"></i> Update Information
+        </button>
+        <button
+          class="bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-lg flex items-center justify-center transition"
+        >
+          <i class="fa fa-ban mr-2"></i> Deactivate Account
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg flex items-center justify-center transition"
+        >
+          <i class="fa fa-trash-o mr-2"></i> Delete Account
+        </button>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium">Total Users</h3>
+          <p class="text-2xl font-bold">100</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium">Active Now</h3>
+          <p class="text-2xl font-bold"><%= auth.role %></p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium">Status</h3>
+          <p class="text-2xl font-bold">
+            <% if(auth.isLoggedIn){ %>
+            <span class="text-green-500">✅ Logged In</span>
+            <% } else{%>
+            <span class="text-red-500">❌ Not Logged In</span>
+            <% } %>
+          </p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium">Role</h3>
+          <p class="text-2xl font-bold"><%= auth.user.role %></p>
+        </div>
+      </div>
+
+      <!-- User Info Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow col-span-1">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">Username</h3>
+          <p class="text-lg"><%= auth.user.username %></p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow col-span-1">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">Email</h3>
+          <p class="text-lg"><%= auth.user.email %></p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow col-span-1">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">Password</h3>
+          <p class="text-lg">••••••••</p>
+          <!-- Never show actual password -->
+        </div>
+      </div>
+
+      <!-- Timestamps Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">Created At</h3>
+          <p class="text-lg">
+            <%= new Date(auth.user.createdAt).toLocaleString() %>
+          </p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">Updated At</h3>
+          <p class="text-lg">
+            <%= new Date(auth.user.updatedAt).toLocaleString() %>
+          </p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-gray-500 text-sm font-medium mb-2">
+            Password Changed
+          </h3>
+          <p class="text-lg">
+            <%= auth.user.passwordChangedAt ? new
+            Date(auth.user.passwordChangedAt).toLocaleString() : 'Never' %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Additional Info Sections -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Login History -->
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4 border-b pb-2">
+            Login History
+          </h3>
+          <ul class="divide-y divide-gray-200">
+            <% [1,2,3,4,5].forEach(item => { %>
+            <li class="py-3">
+              <div class="flex items-center">
+                <div class="bg-blue-100 p-2 rounded-full mr-3">
+                  <i class="fas fa-sign-in-alt text-blue-500"></i>
+                </div>
+                <div>
+                  <p class="font-medium">Login from Chrome on Windows</p>
+                  <p class="text-sm text-gray-500">
+                    Today at <%= new Date().toLocaleTimeString() %>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <!-- User Roles -->
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h3
+            class="text-lg font-semibold mb-4 border-b border-red-200 pb-2 text-center"
+          >
+            User Roles
+          </h3>
+          <ul class="space-y-3">
+            <% ['Admin', 'Editor', 'Viewer', 'Moderator'].forEach(role => { %>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+              <span class="font-medium"><%= role %></span>
+              <% if (role === auth.user.role) { %>
+              <span
+                class="ml-auto bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                >Current</span
+              >
+              <% } %>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-8 text-center text-gray-500 text-sm">
+        Last updated: <%= new Date().toLocaleString() %>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"></div>
 </div>

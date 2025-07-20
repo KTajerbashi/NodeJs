@@ -10,8 +10,8 @@
     <%- include('../_partials/head'); %>
   </head>
   <body class="bg-gray-50">
-    <%- include('../_partials/header', { isLoggedIn : isLoggedIn, role : role ??
-    role, username : username}); %>
+    <%- include('../_partials/header', { isLoggedIn : auth.isLoggedIn, role :
+    auth.role, username : auth.username } ); %>
     <div class="flex min-h-screen">
       <%- include('../_partials/sidebar'); %>
 
