@@ -1,11 +1,10 @@
-const {
-  validator,
-  bcrypt,
-  jwt,
-  promisify,
-  crypto,
-  nodemailer,
-} = require("../global.using");
+const validator = require("validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const { promisify } = require("util");
+const nodemailer = require("nodemailer");
+
 const User = require("../models/user.model");
 const { jwtSecret } = require("../configs/env.config");
 const AppError = require("../utilities/appError");
@@ -115,11 +114,12 @@ class AuthController {
         return res.redirect("/signup");
       }
 
-      const hashedPassword = await bcrypt.hash(password, 12);
+      // const hashedPassword = await bcrypt.hash(password, 12);
       const newUser = await User.create({
         username,
         email,
-        password: hashedPassword,
+        // password: hashedPassword,
+        password: password,
       });
 
       AuthController.createSendToken(newUser, 201, req, res);
@@ -339,7 +339,6 @@ class AuthController {
           req.user = currentUser;
         }
       }
-      console.log("❌ LOCAL : =>>>>>> ", res.locals.auth);
       next();
     } catch (error) {
       next();
