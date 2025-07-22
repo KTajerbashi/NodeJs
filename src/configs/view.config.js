@@ -1,4 +1,6 @@
-const { express, expressLayouts, path } = require("../global.using");
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const path = require("path");
 module.exports = class ViewConfiguration {
   static handler = (app) => {
     app.use(expressLayouts);

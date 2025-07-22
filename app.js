@@ -2,6 +2,7 @@ const path = require("path");
 require("app-module-path").addPath(path.join(__dirname, "../src"));
 const Application = require("./src/configs/server.config");
 const routes = require("./src/routes/root.routes");
+
 const common_routes = require("./src/routes/common/common.routes");
 const connectDB = require("./src/configs/database.config");
 const MiddlewarePipes = require("./src/configs/pipline.config");

@@ -1,12 +1,10 @@
-const {
-  express,
-  session,
-  cookieParser,
-  flash,
-  morgan,
-  helmet,
-  cors,
-} = require("../global.using");
+const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
 
 const authController = require("../controllers/auth.controller");
 module.exports = class MiddlewarePipes {
