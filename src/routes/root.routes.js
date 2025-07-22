@@ -1,12 +1,13 @@
-const { router } = require("../global.using");
+const express = require("express");
+const router = express.Router();
 
 router.use(require("./security/auth.routes"));
 
-// router.use(require("./useCases/product.routes"));
-// router.use(require("./useCases/report.routes"));
-// router.use(require("./useCases/role.routes"));
-// router.use(require("./useCases/system.routes"));
-// router.use(require("./useCases/user.routes"));
+router.use(require("./useCases/system.routes"));
+router.use(require("./useCases/user.routes"));
+router.use(require("./useCases/role.routes"));
+router.use(require("./useCases/report.routes"));
+router.use(require("./useCases/product.routes"));
 
 router.use(require("./common/common.routes"));
 
