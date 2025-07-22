@@ -68,23 +68,44 @@
         </div>
       </div>
 
-      <!-- Submit Button -->
-      <div>
+      <!-- Auth Buttons Section -->
+      <div class="space-y-4 mt-6">
+        <!-- Email/Password Sign In -->
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+          class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          Sign In
+          <i class="fa fa-sign-in"></i>
+          <span>Sign In</span>
         </button>
+
+        <!-- Google Sign In -->
+        <a
+          href="/auth/google"
+          class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        >
+          <i class="fa fa-google"></i>
+          <span>Continue with Google</span>
+        </a>
+
+        <!-- Divider -->
+        <div class="relative flex items-center py-4">
+          <div class="flex-grow border-t border-gray-300"></div>
+          <span class="flex-shrink mx-4 text-gray-500">or</span>
+          <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="text-center text-sm text-gray-600">
+          Don't have an account?
+          <a
+            href="/signup"
+            class="text-blue-600 hover:text-blue-500 font-medium"
+          >
+            Sign up here
+          </a>
+        </div>
       </div>
     </form>
-
-    <!-- Sign Up Link -->
-    <div class="mt-6 text-center">
-      <p class="text-sm text-gray-600">
-        Don't have an account?
-        <a href="/signup" class="text-blue-600 hover:text-blue-500">Sign up</a>
-      </p>
-    </div>
   </div>
 </div>
