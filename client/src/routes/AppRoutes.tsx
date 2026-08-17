@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import AuthLayout from "../layouts/Auth/AuthLayout";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
+import Users from "../pages/Users/Users";
 
 // import MainLayout from "../../layouts/Main/Main.Layout";
 
@@ -48,7 +49,7 @@ function AppRoutes() {
 
         <Route
           path="/users"
-          element={<div>Users Page</div>}
+          element={<Users />}
         />
 
         <Route

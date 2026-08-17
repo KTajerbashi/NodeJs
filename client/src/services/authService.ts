@@ -54,6 +54,10 @@ class AuthService {
     return sessionStorage.getItem(SESSION_KEY) !== null;
   }
 
+  getAllUsers(): User[] {
+    return this.getUsers();
+  }
+  
   private getUsers(): User[] {
     const users = localStorage.getItem(USERS_KEY);
 
