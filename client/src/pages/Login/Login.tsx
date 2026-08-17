@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import "./Login.css";
 import { Link } from "react-router-dom";
+import authService from "../../services/authService";
 
 function Login() {
   const [email, setEmail] = useState("admin");
@@ -9,10 +10,14 @@ function Login() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log({
-      email,
-      password,
-    });
+
+    const success = authService.login(email, password);
+
+    if (success) {
+      window.location.href = "/dashboard";
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   return (

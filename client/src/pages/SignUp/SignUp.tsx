@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import "./Signup.css";
 import { Link } from "react-router-dom";
+import authService from "../../services/authService";
 
 function Signup() {
   const [form, setForm] = useState({
@@ -22,9 +23,17 @@ function Signup() {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    console.log(form);
-  };
+    const result = authService.signup({
+      id: crypto.randomUUID(),
 
+      ...form,
+    });
+
+    if (result) {
+      alert("Account created successfully");
+      window.location.href = "/login";
+    }
+  };
   return (
     <section className="signup">
       <div className="signup__header">
