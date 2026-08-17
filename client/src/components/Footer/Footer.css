@@ -1,0 +1,21 @@
+.app-footer {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.app-footer__copyright,
+.app-footer__version {
+  white-space: nowrap;
+}
