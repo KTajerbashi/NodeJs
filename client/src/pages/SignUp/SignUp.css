@@ -13,13 +13,13 @@
   margin: 0;
   font-size: 26px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-color);
 }
 
 .signup__description {
   margin-top: 8px;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-color);
 }
 
 /* Form */
@@ -43,7 +43,7 @@
 .signup__field label {
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: var(--text-color);
 }
 
 .signup__field input {
@@ -53,12 +53,12 @@
   border-radius: 6px;
   outline: none;
   font-size: 14px;
-  color: #111827;
+  color: var(--text-color);
   transition: border-color 0.2s ease;
 }
 
 .signup__field input::placeholder {
-  color: #9ca3af;
+  color: var(--text-color);
 }
 
 .signup__field input:focus {
@@ -74,7 +74,7 @@
   border: none;
   border-radius: 6px;
   background-color: #2563eb;
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;

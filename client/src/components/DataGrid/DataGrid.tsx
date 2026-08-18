@@ -27,7 +27,7 @@ function DataGrid<T>({
               <th key={String(column.key)}>{column.title}</th>
             ))}
 
-            {actions && actions.length > 0 && <th>Actions</th>}
+            {actions && actions.length > 0 && <th className="app-column-action">Actions</th>}
           </tr>
         </thead>
 
@@ -49,7 +49,7 @@ function DataGrid<T>({
               ))}
 
               {actions && actions.length > 0 && (
-                <td>
+                <td className="app-column-action">
                   {actions.map((action, index) => (
                     <button
                       key={index}

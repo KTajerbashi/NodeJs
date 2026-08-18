@@ -1,138 +1,205 @@
+/* ==========================
+   Data Grid Container
+========================== */
+
 .data-grid-container {
   width: 100%;
+
   overflow-x: auto;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 20px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* Table */
+/* ==========================
+   Table
+========================== */
 
 .data-grid {
   width: 100%;
+
   border-collapse: separate;
+
   border-spacing: 0;
+
   min-width: 700px;
 }
 
-/* Header */
+.app-column-action {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 3rem;
+  overflow: auto;
+  gap: 3px;
+}
+
+/* ==========================
+   Header
+========================== */
 
 .data-grid thead {
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .data-grid th {
-  padding: 14px 16px;
-  text-align: left;
+  padding: 16px;
 
-  font-size: 13px;
+  font-size: 12px;
+
   font-weight: 600;
-  color: #475569;
+
+  color: rgba(255, 255, 255, 0.85);
 
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 
-  border-bottom: 1px solid #e2e8f0;
+  letter-spacing: 0.05em;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 
   white-space: nowrap;
 }
 
-/* Rows */
+/* First and last header radius */
+
+.data-grid th:first-child {
+  border-top-left-radius: 20px;
+}
+
+.data-grid th:last-child {
+  border-top-right-radius: 20px;
+}
+
+/* ==========================
+   Body Cells
+========================== */
 
 .data-grid td {
-  padding: 14px 16px;
+  padding: 15px 16px;
 
   font-size: 14px;
-  color: #334155;
 
-  border-bottom: 1px solid #f1f5f9;
+  color: rgba(255, 255, 255, 0.85);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
   vertical-align: middle;
 }
 
-/* Zebra rows */
+/* ==========================
+   Zebra
+========================== */
 
 .data-grid tbody tr:nth-child(even) {
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.04);
 }
 
-/* Hover */
+/* ==========================
+   Row Hover
+========================== */
 
 .data-grid tbody tr {
-  transition: background-color 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .data-grid tbody tr:hover {
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.12);
+
+  transform: scale(1.002);
 }
 
-/* Clickable rows */
+/* Clickable */
 
 .clickable-row {
   cursor: pointer;
 }
 
-.clickable-row:hover {
-  background: #eff6ff !important;
-}
+/* ==========================
+   Actions
+========================== */
 
-/* Last row */
-
-.data-grid tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* Actions column */
-
-.data-grid td:last-child {
+.app-action-column {
   white-space: nowrap;
 }
 
-/* Buttons spacing */
-
 .data-grid .app-btn {
-  margin-right: 6px;
+  margin-right: 8px;
+
+  padding: 6px 12px;
+
+  font-size: 13px;
 }
 
 .data-grid .app-btn:last-child {
   margin-right: 0;
 }
 
-/* Loading */
+/* ==========================
+   Loading
+========================== */
 
 .data-grid-loading {
+  min-height: 180px;
+
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 
-  min-height: 150px;
+  color: white;
 
-  font-size: 15px;
-  color: #64748b;
+  font-size: 16px;
 }
 
-/* Empty state */
+/* ==========================
+   Empty
+========================== */
 
 .data-grid-empty {
+  min-height: 180px;
+
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 
-  min-height: 150px;
-
-  color: #94a3b8;
-
-  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* Responsive */
+/* ==========================
+   Scrollbar
+========================== */
+
+.data-grid-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.data-grid-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+
+  border-radius: 10px;
+}
+
+/* ==========================
+   Responsive
+========================== */
 
 @media (max-width: 768px) {
   .data-grid-container {
-    border-radius: 8px;
+    border-radius: 14px;
   }
 
   .data-grid th,

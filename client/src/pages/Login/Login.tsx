@@ -5,18 +5,35 @@ import { Link } from "react-router-dom";
 import authService from "../../services/authService";
 
 function Login() {
-  const [email, setEmail] = useState("admin");
+  const [email, setEmail] = useState("admin@mail.com");
   const [password, setPassword] = useState("admin");
-
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+  });
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    const newErrors = {
+      email: email.trim() === "",
+      password: password.trim() === "",
+    };
+
+    setErrors(newErrors);
+
+    if (newErrors.email || newErrors.password) {
+      return;
+    }
 
     const success = authService.login(email, password);
 
     if (success) {
       window.location.href = "/dashboard";
     } else {
-      alert("Invalid credentials");
+      setErrors({
+        email: true,
+        password: true,
+      });
     }
   };
 
@@ -25,26 +42,50 @@ function Login() {
       <h1 className="login__title">Login</h1>
 
       <form className="login__form" onSubmit={handleSubmit}>
-        <div className="login__field">
-          <label>Email</label>
+        <div className="login__field app-form-group">
+          <label className="app-form-label">Email</label>
 
           <input
+            className={`
+    app-form-input
+    ${errors.email ? "is-invalid" : ""}
+  `}
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErrors({
+                ...errors,
+                email: false,
+              });
+            }}
             placeholder="email@example.com"
           />
+          {errors.email && (
+            <small className="form-error">Email is required</small>
+          )}
         </div>
 
-        <div className="login__field">
-          <label>Password</label>
+        <div className="login__field app-form-group">
+          <label className="app-form-label">Password</label>
 
           <input
             type="password"
+            className={`app-form-input${errors.password ? "is-invalid" : ""}`}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+
+              setErrors({
+                ...errors,
+                password: false,
+              });
+            }}
             placeholder="Password"
           />
+          {errors.password && (
+            <small className="form-error">Password is required</small>
+          )}
         </div>
 
         <div className="login__options">

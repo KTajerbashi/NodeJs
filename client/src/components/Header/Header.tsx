@@ -29,7 +29,10 @@ function Header() {
 
         <NavLink to="/profile" className="app-header__user">
           <span className="app-header__avatar">
-            {user && user.firstName[0]}
+            {user &&
+              user.firstName[0].toUpperCase() +
+                "_" +
+                user.lastName[0].toUpperCase()}
           </span>
 
           <span className="app-header__username">

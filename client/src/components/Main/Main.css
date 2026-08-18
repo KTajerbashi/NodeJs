@@ -1,9 +1,6 @@
 .app-main {
   flex: 1;
-
   padding: 24px;
-
-  background-color: #f9fafb;
-
+  background: var(--bg-color);
   overflow-y: auto;
 }

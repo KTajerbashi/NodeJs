@@ -1,0 +1,26 @@
+{
+  "name": "full-stack-app",
+  "version": "1.0.0",
+  "description": "this is a project with react+node+mongodb and docker full-stack js application.",
+  "keywords": [
+    "react",
+    "node",
+    "mongo",
+    "docker"
+  ],
+  "homepage": "https://github.com/KTajerbashi/NodeJs#readme",
+  "bugs": {
+    "url": "https://github.com/KTajerbashi/NodeJs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KTajerbashi/NodeJs.git"
+  },
+  "license": "MIT",
+  "author": "tajerbashi",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm --prefix ./client run start"
+  }
+}

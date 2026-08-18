@@ -4,7 +4,9 @@ import "./Signup.css";
 import { Link } from "react-router-dom";
 import authService from "../../services/authService";
 
+
 function Signup() {
+
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -13,107 +15,380 @@ function Signup() {
     confirmPassword: "",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+
+    const { name, value } = event.target;
+
+
     setForm({
       ...form,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
+
+
+    setErrors({
+      ...errors,
+      [name]: false,
+    });
+
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+
+
+  const handleSubmit = (
+    event: React.FormEvent
+  ) => {
+
     event.preventDefault();
 
+
+    const validation = {
+
+      firstName:
+        form.firstName.trim() === "",
+
+
+      lastName:
+        form.lastName.trim() === "",
+
+
+      email:
+        form.email.trim() === "",
+
+
+      password:
+        form.password.trim() === "",
+
+
+      confirmPassword:
+        form.confirmPassword.trim() === "" ||
+        form.password !== form.confirmPassword,
+
+    };
+
+
+    setErrors(validation);
+
+
+
+    if(Object.values(validation).some(Boolean)) {
+
+      return;
+
+    }
+
+
+
     const result = authService.signup({
+
       id: crypto.randomUUID(),
 
       ...form,
+
     });
 
-    if (result) {
-      alert("Account created successfully");
-      window.location.href = "/login";
+
+
+    if(result) {
+
+      alert(
+        "Account created successfully"
+      );
+
+      window.location.href="/login";
+
     }
+
   };
+
+
+
   return (
+
     <section className="signup">
+
+
       <div className="signup__header">
-        <h1 className="signup__title">Create Account</h1>
+
+        <h1 className="signup__title">
+          Create Account
+        </h1>
+
 
         <p className="signup__description">
           Create your account to access the dashboard.
         </p>
+
       </div>
 
-      <form className="signup__form" onSubmit={handleSubmit}>
-        <div className="signup__field">
-          <label>First Name</label>
+
+
+
+      <form
+        className="signup__form"
+        onSubmit={handleSubmit}
+      >
+
+
+        <div className="app-form-group">
+
+          <label className="app-form-label">
+            First Name
+          </label>
+
 
           <input
+
+            className={`app-form-input ${
+              errors.firstName 
+              ? "is-invalid" 
+              : ""
+            }`}
+
             name="firstName"
+
             placeholder="John"
+
             value={form.firstName}
+
             onChange={handleChange}
+
           />
+
+
+          {
+            errors.firstName &&
+            <small className="form-error">
+              First name is required
+            </small>
+          }
+
         </div>
 
-        <div className="signup__field">
-          <label>Last Name</label>
+
+
+
+
+        <div className="app-form-group">
+
+          <label className="app-form-label">
+            Last Name
+          </label>
+
 
           <input
+
+            className={`app-form-input ${
+              errors.lastName 
+              ? "is-invalid" 
+              : ""
+            }`}
+
             name="lastName"
+
             placeholder="Smith"
+
             value={form.lastName}
+
             onChange={handleChange}
+
           />
+
+
+          {
+            errors.lastName &&
+            <small className="form-error">
+              Last name is required
+            </small>
+          }
+
+
         </div>
 
-        <div className="signup__field">
-          <label>Email</label>
+
+
+
+
+
+        <div className="app-form-group">
+
+          <label className="app-form-label">
+            Email
+          </label>
+
 
           <input
+
+            className={`app-form-input ${
+              errors.email 
+              ? "is-invalid" 
+              : ""
+            }`}
+
             name="email"
+
             type="email"
+
             placeholder="john@example.com"
+
             value={form.email}
+
             onChange={handleChange}
+
           />
+
+
+          {
+            errors.email &&
+            <small className="form-error">
+              Email is required
+            </small>
+          }
+
+
         </div>
 
-        <div className="signup__field">
-          <label>Password</label>
+
+
+
+
+
+        <div className="app-form-group">
+
+          <label className="app-form-label">
+            Password
+          </label>
+
 
           <input
+
+            className={`app-form-input ${
+              errors.password 
+              ? "is-invalid" 
+              : ""
+            }`}
+
             name="password"
+
             type="password"
+
             placeholder="Password"
+
             value={form.password}
+
             onChange={handleChange}
+
           />
+
+
+          {
+            errors.password &&
+            <small className="form-error">
+              Password is required
+            </small>
+          }
+
+
         </div>
 
-        <div className="signup__field">
-          <label>Confirm Password</label>
+
+
+
+
+
+
+        <div className="app-form-group">
+
+          <label className="app-form-label">
+            Confirm Password
+          </label>
+
 
           <input
+
+            className={`app-form-input ${
+              errors.confirmPassword 
+              ? "is-invalid" 
+              : ""
+            }`}
+
             name="confirmPassword"
+
             type="password"
+
             placeholder="Confirm password"
+
             value={form.confirmPassword}
+
             onChange={handleChange}
+
           />
+
+
+          {
+            errors.confirmPassword &&
+            <small className="form-error">
+              Passwords do not match
+            </small>
+          }
+
+
         </div>
 
-        <button className="signup__button" type="submit">
+
+
+
+
+
+        <button
+          className="signup__button app-btn primary"
+          type="submit"
+        >
+
           Create Account
+
         </button>
-        <Link to="/login" aria-label="Go to Login">
-          <button className="login__button" type="button">
+
+
+
+
+
+        <Link to="/login">
+
+          <button
+            className="login__button app-btn success"
+            type="button"
+          >
+
             I have an account!
+
           </button>
+
         </Link>
+
+
+
       </form>
+
+
     </section>
+
   );
+
 }
+
 
 export default Signup;

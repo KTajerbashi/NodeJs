@@ -7,8 +7,8 @@
 
   padding: 0 24px;
 
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg-color);
+  border-bottom: 1px solid var(--text-color);
 }
 
 /* Brand */
@@ -18,7 +18,7 @@
   align-items: center;
   gap: 12px;
 
-  color: #111827;
+  color: var(--text-color);
 
   text-decoration: none;
 }
@@ -38,7 +38,7 @@
   border-radius: 8px;
 
   background-color: #2563eb;
-  color: #ffffff;
+  color: var(--text-color);
 
   font-size: 18px;
   font-weight: 700;
@@ -62,7 +62,7 @@
 
   border-radius: 6px;
 
-  color: #374151;
+  color: var(--text-color);
 
   font-size: 14px;
   font-weight: 500;
@@ -71,7 +71,7 @@
 }
 
 .app-header__link:hover {
-  background-color: #f3f4f6;
+  background-color: #5a6680;
 }
 
 .app-header__link.active {
@@ -95,20 +95,20 @@
 }
 
 .app-header__user:hover {
-  background-color: #f3f4f6;
+  background-color: #686b72;
 }
 
 .app-header__avatar {
   width: 32px;
   height: 32px;
-
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: center;
 
   border-radius: 50%;
 
-  background-color: #e5e7eb;
+  background-color: #0388b1;
 
   font-size: 13px;
   font-weight: 600;
@@ -117,4 +117,5 @@
 .app-header__username {
   font-size: 14px;
   font-weight: 500;
+  color: var(--text-color);
 }

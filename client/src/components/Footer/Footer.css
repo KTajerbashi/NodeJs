@@ -7,10 +7,10 @@
 
   padding: 0 24px;
 
-  background-color: #ffffff;
+  background: var(--bg-color);
   border-top: 1px solid #e5e7eb;
 
-  color: #6b7280;
+  color: var(--text-color);
 
   font-size: 13px;
 }

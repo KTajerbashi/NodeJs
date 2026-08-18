@@ -1,29 +1,361 @@
-::-webkit-scrollbar {
-  display: none;
+/* ==========================
+   Global Reset
+========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ==========================
+   Scrollbar
+========================== */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ==========================
+   Root Theme Variables
+========================== */
+
+:root {
+  --primary-color: #0d6efd;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --bg-color: #0e2235;
+  --bg-hover-color: #13385a;
+  --text-color: #deebff;
+  --border-radius: 8px;
+  --transition: all 0.25s ease;
+}
+
+/* ==========================
+   Body
+========================== */
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* ==========================
+   Input / Form Controls
+========================== */
+
+.app-form-input,
+.app-form-select,
+.app-form-textarea {
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border: none;
+
+  outline: none;
+
+  color: white;
+
+  font-size: 14px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 12px;
+
+  transition: all 0.25s ease;
+}
+
+/* Placeholder */
+
+.app-form-input::placeholder,
+.app-form-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Focus */
+
+.app-form-input:focus,
+.app-form-select:focus,
+.app-form-textarea:focus {
+  background: rgba(255, 255, 255, 0.18);
+
+  border-color: #60a5fa;
+
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.25);
+}
+
+/* Hover */
+
+.app-form-input:hover,
+.app-form-select:hover,
+.app-form-textarea:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ==========================
+   Textarea
+========================== */
+
+.app-form-textarea {
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+/* ==========================
+   Select
+========================== */
+
+.app-form-select {
+  appearance: none;
+
+  cursor: pointer;
+}
+
+.app-form-select option {
+  background: #0f172a;
+
+  color: white;
+}
+
+/* ==========================
+   Validation States
+========================== */
+
+.app-form-input.is-valid,
+.app-form-select.is-valid,
+.app-form-textarea.is-valid {
+  border-color: #22c55e;
+
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+.app-form-input.is-invalid,
+.app-form-select.is-invalid,
+.app-form-textarea.is-invalid {
+  border-color: #ef4444;
+
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* ==========================
+   Disabled
+========================== */
+
+.app-form-input:disabled,
+.app-form-select:disabled,
+.app-form-textarea:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+/* ==========================
+   Labels
+========================== */
+
+.app-form-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+/* ==========================
+   Form Group
+========================== */
+
+.app-form-group {
+  margin-bottom: 20px;
+}
+
+/* ==========================
+   Checkbox / Radio
+========================== */
+
+.app-form-check {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: white;
+}
+
+.app-form-check input {
+  width: 18px;
+
+  height: 18px;
+
+  cursor: pointer;
+
+  accent-color: #0d6efd;
+}
+
+/* ==========================
+   File Input
+========================== */
+
+.app-form-file {
+  padding: 10px;
+
+  color: white;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.app-form-file::file-selector-button {
+  border: none;
+
+  padding: 8px 14px;
+
+  border-radius: 8px;
+
+  background: #0d6efd;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+/* ==========================
+   Floating Input
+========================== */
+
+.app-floating {
+  position: relative;
+}
+
+.app-floating label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transition: 0.25s;
+}
+
+.app-floating input:focus + label,
+.app-floating input:not(:placeholder-shown) + label {
+  top: 0;
+
+  font-size: 12px;
+
+  padding: 0 6px;
+
+  background: #0f172a;
+
+  color: #60a5fa;
+}
+.form-error {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #f87171;
+
+  font-size: 13px;
+}
+/* ==========================
+   Buttons
+========================== */
+
 .app-btn {
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
+  min-width: 4rem;
+  transition: var(--transition);
 }
 
 .app-btn:hover {
   opacity: 0.85;
+
+  transform: translateY(-1px);
 }
 
-.app-btn.danger {
-  background: #dc3545;
-  color: white;
+.app-btn:active {
+  transform: scale(0.97);
 }
+
+/* Primary */
 
 .app-btn.primary {
-  background: #0d6efd;
+  background: var(--primary-color);
+
   color: white;
 }
 
+/* Success */
+
 .app-btn.success {
-  background: #198754;
+  background: var(--success-color);
+
   color: white;
+}
+
+/* Danger */
+
+.app-btn.danger {
+  background: var(--danger-color);
+
+  color: white;
+}
+
+/* Warning */
+
+.app-btn.warning {
+  background: var(--warning-color);
+
+  color: #111827;
+}
+
+/* ==========================
+   Glass Effect Helper
+========================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 20px;
 }
