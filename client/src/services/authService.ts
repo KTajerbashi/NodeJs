@@ -1,10 +1,12 @@
 // import type { User } from "../models/user";
 
+import BaseApiService from "./base/baseApiService";
+
 const USERS_KEY = "react_admin_users";
 const SESSION_KEY = "react_admin_session";
 
-class AuthService {
-  signup(user: User): boolean {
+class AuthService extends BaseApiService {
+  signup(user: IUser): boolean {
     const users = this.getUsers();
 
     const exists = users.some((x) => x.email === user.email);
@@ -40,7 +42,7 @@ class AuthService {
     sessionStorage.removeItem(SESSION_KEY);
   }
 
-  getCurrentUser(): User | null {
+  getCurrentUser(): IUser | null {
     const user = sessionStorage.getItem(SESSION_KEY);
 
     if (!user) {
@@ -54,11 +56,11 @@ class AuthService {
     return sessionStorage.getItem(SESSION_KEY) !== null;
   }
 
-  getAllUsers(): User[] {
+  getAllUsers(): IUser[] {
     return this.getUsers();
   }
-  
-  private getUsers(): User[] {
+
+  private getUsers(): IUser[] {
     const users = localStorage.getItem(USERS_KEY);
 
     if (!users) {

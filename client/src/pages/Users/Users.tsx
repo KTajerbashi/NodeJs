@@ -1,32 +1,29 @@
 import { useState } from "react";
 
 import authService from "../../services/authService";
+// import userService from "../../services/userService.ts";
 
 import "./Users.css";
 import DataGrid from "../../components/DataGrid/DataGrid";
 
 function Users() {
-  // const [users, setUsers] = useState<User[]>([]);
-  // useEffect(() => {
-  //   const data = authService.getAllUsers();
-  //   setUsers(data);
-  // }, []);
 
-  const [users] = useState<User[]>(() => authService.getAllUsers());
+  const [users] = useState<IUser[]>(() => authService.getAllUsers());
+  // const [users_] = useState<IUser[]>(() => userService.getAll());
 
-  const handleEdit = (user: User) => {
+  const handleEdit = (user: IUser) => {
     console.log("Edit", user);
   };
 
-  const handleDelete = (user: User) => {
+  const handleDelete = (user: IUser) => {
     console.log("Delete", user);
   };
 
-  const handleView = (user: User) => {
+  const handleView = (user: IUser) => {
     console.log("View", user);
   };
 
-  const handleRowClick = (user: User) => {
+  const handleRowClick = (user: IUser) => {
     console.log("Row clicked", user);
   };
 
