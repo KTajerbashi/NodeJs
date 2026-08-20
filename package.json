@@ -1,12 +1,16 @@
 {
   "name": "full-stack-app",
   "version": "1.0.0",
-  "description": "this is a project with react+node+mongodb and docker full-stack js application.",
+  "private": true,
+  "description": "A full-stack application built with React, Node.js, Express, MongoDB, and Docker.",
   "keywords": [
     "react",
     "node",
-    "mongo",
-    "docker"
+    "express",
+    "mongodb",
+    "mongoose",
+    "docker",
+    "full-stack"
   ],
   "homepage": "https://github.com/KTajerbashi/NodeJs#readme",
   "bugs": {
@@ -18,9 +22,14 @@
   },
   "license": "MIT",
   "author": "tajerbashi",
-  "type": "commonjs",
-  "main": "index.js",
   "scripts": {
-    "start": "npm --prefix ./client run start"
+    "start": "concurrently --raw \"npm --prefix ./client run start\" \"npm --prefix ./server run dev\"",
+    "start:client": "npm --prefix ./client run start",
+    "start:server": "npm --prefix ./server run dev",
+    "build": "npm --prefix ./server run build && npm --prefix ./client run build",
+    "start:prod": "concurrently --raw \"npm --prefix ./client run preview\" \"npm --prefix ./server run start\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }
