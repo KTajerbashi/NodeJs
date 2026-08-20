@@ -1,3 +1,4 @@
+import { generateGuid } from "../../extensions/stringExtensions";
 import { API_CONFIG } from "../configs/apiConfig";
 
 class BaseApiService {
@@ -36,6 +37,21 @@ class BaseApiService {
     return this.request<TResponse>(url, {
       method: "POST",
       body: JSON.stringify(data),
+    });
+  }
+
+  protected onCreate<TRequest, TResponse>(
+    url: string,
+    data: TRequest,
+  ): Promise<TResponse> {
+    const requestData = {
+      ...data,
+      key: generateGuid(),
+    };
+
+    return this.request<TResponse>(url, {
+      method: "POST",
+      body: JSON.stringify(requestData),
     });
   }
 

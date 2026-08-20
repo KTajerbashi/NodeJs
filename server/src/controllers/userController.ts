@@ -7,7 +7,6 @@ const userService = new UserService(new UserRepository());
 
 export async function getUsers(_req: Request, res: Response): Promise<void> {
   const users = await userService.getAllUsers();
-
   res.status(200).json(users);
 }
 

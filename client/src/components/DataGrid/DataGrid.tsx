@@ -27,7 +27,9 @@ function DataGrid<T>({
               <th key={String(column.key)}>{column.title}</th>
             ))}
 
-            {actions && actions.length > 0 && <th className="app-column-action">Actions</th>}
+            {actions && actions.length > 0 && (
+              <th className="app-column-action">Actions</th>
+            )}
           </tr>
         </thead>
 
@@ -49,23 +51,22 @@ function DataGrid<T>({
               ))}
 
               {actions && actions.length > 0 && (
-                <td className="app-column-action">
-                  {actions.map((action, index) => (
-                    <button
-                      key={index}
-                      // className={action.className}
-                      className={`app-btn ${action.className ?? ""}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-
-                        action.onClick(row);
-                      }}
-                    >
-                      {action.icon}
-
-                      {action.label}
-                    </button>
-                  ))}
+                <td className="app-action-column">
+                  <div className="app-action-buttons">
+                    {actions.map((action, index) => (
+                      <button
+                        key={index}
+                        className={`app-btn ${action.className ?? ""}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          action.onClick(row);
+                        }}
+                      >
+                        {action.icon}
+                        {action.label}
+                      </button>
+                    ))}
+                  </div>
                 </td>
               )}
             </tr>

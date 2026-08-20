@@ -1,5 +1,4 @@
-interface IUser {
-  id: string;
+interface IUser extends IBaseModel {
   firstName: string;
   lastName: string;
   email: string;

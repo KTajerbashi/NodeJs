@@ -1,209 +1,292 @@
-/* ==========================
+/* =========================================
    Data Grid Container
-========================== */
+========================================= */
 
 .data-grid-container {
   width: 100%;
-
   overflow-x: auto;
 
-  background: rgba(255, 255, 255, 0.08);
-
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px);
-
   -webkit-backdrop-filter: blur(20px);
 
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
 
-  border-radius: 20px;
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* ==========================
+
+/* =========================================
    Table
-========================== */
+========================================= */
 
 .data-grid {
   width: 100%;
+  min-width: 700px;
 
   border-collapse: separate;
-
   border-spacing: 0;
 
-  min-width: 700px;
+  table-layout: auto;
 }
 
-.app-column-action {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 3rem;
-  overflow: auto;
-  gap: 3px;
-}
 
-/* ==========================
+/* =========================================
    Header
-========================== */
+========================================= */
 
 .data-grid thead {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .data-grid th {
-  padding: 16px;
+  height: 54px;
+
+  padding: 0 16px;
+
+  color: rgba(255, 255, 255, 0.9);
 
   font-size: 12px;
+  font-weight: 700;
 
-  font-weight: 600;
-
-  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  vertical-align: middle;
 
   text-transform: uppercase;
+  letter-spacing: 0.06em;
 
-  letter-spacing: 0.05em;
+  white-space: nowrap;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+/* First Header */
+
+.data-grid th:first-child {
+  border-top-left-radius: 18px;
+}
+
+
+/* Last Header */
+
+.data-grid th:last-child {
+  border-top-right-radius: 18px;
+}
+
+
+/* =========================================
+   Body
+========================================= */
+
+.data-grid td {
+  height: 54px;
+
+  padding: 10px 16px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 14px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 
   white-space: nowrap;
 }
 
-/* First and last header radius */
 
-.data-grid th:first-child {
-  border-top-left-radius: 20px;
-}
-
-.data-grid th:last-child {
-  border-top-right-radius: 20px;
-}
-
-/* ==========================
-   Body Cells
-========================== */
-
-.data-grid td {
-  padding: 15px 16px;
-
-  font-size: 14px;
-
-  color: rgba(255, 255, 255, 0.85);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-  vertical-align: middle;
-}
-
-/* ==========================
-   Zebra
-========================== */
+/* =========================================
+   Zebra Rows
+========================================= */
 
 .data-grid tbody tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.025);
 }
 
-/* ==========================
-   Row Hover
-========================== */
+
+/* =========================================
+   Row
+========================================= */
 
 .data-grid tbody tr {
-  transition: all 0.25s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
+
+
+/* =========================================
+   Row Hover
+========================================= */
 
 .data-grid tbody tr:hover {
-  background: rgba(255, 255, 255, 0.12);
-
-  transform: scale(1.002);
+  background: rgba(255, 255, 255, 0.09);
 }
 
-/* Clickable */
+
+/* =========================================
+   Clickable Row
+========================================= */
 
 .clickable-row {
   cursor: pointer;
 }
 
-/* ==========================
-   Actions
-========================== */
 
-.app-action-column {
+/* =========================================
+   Actions Header
+========================================= */
+
+.data-grid .app-column-action {
+  width: 1%;
+  min-width: 180px;
+
+  text-align: center;
+
   white-space: nowrap;
 }
 
+
+/* =========================================
+   Actions Cell
+========================================= */
+
+.data-grid .app-action-column {
+  width: 1%;
+  min-width: 180px;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   Actions Container
+========================================= */
+
+.data-grid .app-action-buttons {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+
+/* =========================================
+   Action Buttons
+========================================= */
+
 .data-grid .app-btn {
-  margin-right: 8px;
+  margin: 0;
 
-  padding: 6px 12px;
+  padding: 6px 11px;
 
-  font-size: 13px;
+  font-size: 12px;
+
+  white-space: nowrap;
 }
 
-.data-grid .app-btn:last-child {
-  margin-right: 0;
-}
 
-/* ==========================
+/* =========================================
    Loading
-========================== */
+========================================= */
 
 .data-grid-loading {
   min-height: 180px;
 
   display: flex;
 
+  align-items: center;
   justify-content: center;
 
-  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
 
-  color: white;
-
-  font-size: 16px;
+  font-size: 15px;
 }
 
-/* ==========================
+
+/* =========================================
    Empty
-========================== */
+========================================= */
 
 .data-grid-empty {
   min-height: 180px;
 
   display: flex;
 
+  align-items: center;
   justify-content: center;
 
-  align-items: center;
+  color: rgba(255, 255, 255, 0.65);
 
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
 }
 
-/* ==========================
+
+/* =========================================
    Scrollbar
-========================== */
+========================================= */
 
 .data-grid-container::-webkit-scrollbar {
   height: 6px;
 }
 
+.data-grid-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .data-grid-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.22);
 
   border-radius: 10px;
 }
 
-/* ==========================
+.data-grid-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================================
    Responsive
-========================== */
+========================================= */
 
 @media (max-width: 768px) {
+
   .data-grid-container {
     border-radius: 14px;
   }
 
-  .data-grid th,
+  .data-grid th {
+    height: 48px;
+    padding: 0 12px;
+
+    font-size: 11px;
+  }
+
   .data-grid td {
-    padding: 12px;
+    height: 48px;
+    padding: 8px 12px;
+
+    font-size: 13px;
+  }
+
+  .data-grid .app-column-action,
+  .data-grid .app-action-column {
+    min-width: 150px;
+  }
+
+  .data-grid .app-btn {
+    padding: 5px 9px;
+    font-size: 11px;
   }
 }

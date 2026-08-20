@@ -1,0 +1,3 @@
+interface IBaseModel {
+  key: string;
+}

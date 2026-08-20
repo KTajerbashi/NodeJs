@@ -1,26 +1,25 @@
 import BaseApiService from "./base/baseApiService";
 
 class UserService extends BaseApiService {
-  getAll() {
-    return this.get<IUser[]>("/users")
-      .then((x) => x)
-      .catch((e) => console.error(e));
+  getAll(): Promise<IUser[]> {
+    return this.get<IUser[]>("/users");
   }
 
-  getById(id: string) {
+  getById(id: string): Promise<IUser> {
     return this.get<IUser>(`/users/${id}`);
   }
 
-  create(user: UserRequest) {
-    return this.post<UserRequest, UserResponse>("/users", user);
+  create(user: UserRequest): Promise<UserResponse> {
+    return this.onCreate<UserRequest, UserResponse>("/users", user);
   }
 
-  update(id: string, user: UserRequest) {
+  update(id: string, user: UserRequest): Promise<UserResponse> {
     return this.put<UserRequest, UserResponse>(`/users/${id}`, user);
   }
 
-  remove(id: string) {
+  remove(id: string): Promise<void> {
     return this.delete<void>(`/users/${id}`);
   }
 }
+
 export default new UserService();

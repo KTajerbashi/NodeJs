@@ -1,5 +1,6 @@
-interface UserResponse {
-  id:string;
-  firstName:string;
-  lastName:string;
+interface UserResponse extends IBaseModel {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: "";
 }
