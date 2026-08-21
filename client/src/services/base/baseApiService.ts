@@ -1,4 +1,4 @@
-import { generateGuid } from "../../extensions/stringExtensions";
+import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 import { API_CONFIG } from "../configs/apiConfig";
 
 class BaseApiService {
@@ -6,11 +6,11 @@ class BaseApiService {
 
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}${url}`, {
+      ...options,
       headers: {
         "Content-Type": "application/json",
         ...options?.headers,
       },
-      ...options,
     });
 
     if (!response.ok) {
@@ -21,7 +21,19 @@ class BaseApiService {
       throw new Error(error.message || "API Error");
     }
 
-    return response.json();
+    // 204 No Content
+    if (response.status === 204) {
+      return undefined as T;
+    }
+
+    const text = await response.text();
+
+    // Empty response body
+    if (!text) {
+      return undefined as T;
+    }
+
+    return JSON.parse(text) as T;
   }
 
   protected get<TResponse>(url: string): Promise<TResponse> {

@@ -56,9 +56,7 @@ class AuthService extends BaseApiService {
     return sessionStorage.getItem(SESSION_KEY) !== null;
   }
 
-  getAllUsers(): IUser[] {
-    return this.getUsers();
-  }
+
 
   private getUsers(): IUser[] {
     const users = localStorage.getItem(USERS_KEY);

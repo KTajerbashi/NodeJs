@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import authService from "../../services/authService";
+import AppFormError from "../../components/AppFormError/AppFormError";
 
 function Login() {
   const [email, setEmail] = useState("admin@mail.com");
@@ -61,9 +62,7 @@ function Login() {
             }}
             placeholder="email@example.com"
           />
-          {errors.email && (
-            <small className="form-error">Email is required</small>
-          )}
+          <AppFormError invalid={errors.email} message={"Email is required"} />
         </div>
 
         <div className="login__field app-form-group">
@@ -83,9 +82,7 @@ function Login() {
             }}
             placeholder="Password"
           />
-          {errors.password && (
-            <small className="form-error">Password is required</small>
-          )}
+          <AppFormError invalid={errors.password} message={"Password is required"} />
         </div>
 
         <div className="login__options">

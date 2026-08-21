@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 
-import userService from "../services/userService";
+import roleService from "../services/roleService";
 
-function useUsers() {
-  const [data, setData] = useState<IUser[]>([]);
+function useRoles() {
+  const [data, setData] = useState<IRole[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
-        const data = await userService.getAll();
+        const data = await roleService.getAll();
 
         if (!cancelled) {
           setData(data);
@@ -20,7 +20,7 @@ function useUsers() {
       } catch (error) {
         if (!cancelled) {
           console.error(error);
-          setError("Failed to load users.");
+          setError("Failed to load RoleData.");
         }
       } finally {
         if (!cancelled) {
@@ -29,7 +29,7 @@ function useUsers() {
       }
     };
 
-    fetchUsers();
+    fetchData();
 
     return () => {
       cancelled = true;
@@ -45,4 +45,4 @@ function useUsers() {
   };
 }
 
-export default useUsers;
+export default useRoles;

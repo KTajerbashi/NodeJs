@@ -1,5 +1,4 @@
-interface IRoleResponse {
-  id: string;
+interface IRoleResponse extends IBaseModel {
   title: string;
-  key: string;
+  code: string;
 }

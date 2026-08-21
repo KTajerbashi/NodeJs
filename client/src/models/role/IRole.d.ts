@@ -1,4 +1,4 @@
-interface IRole {
+interface IRole extends IBaseModel{
   title: string;
-  key: string;
+  code: string;
 }

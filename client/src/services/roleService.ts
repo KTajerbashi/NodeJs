@@ -18,7 +18,7 @@ class RoleSerivce extends BaseApiService {
   }
 
   remove(id: string) {
-    return this.delete<void>(`/roles/${id}`);
+    return this.delete<boolean>(`/roles/${id}`);
   }
 }
 

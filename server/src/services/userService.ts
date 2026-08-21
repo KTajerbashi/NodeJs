@@ -1,36 +1,27 @@
+import { BaseService } from "./base/baseService.js";
+import { User } from "../models/user/userModel.js";
 import { UserRepository } from "../repositories/userRepository.js";
 
-export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
-
-  async getAllUsers() {
-    return this.userRepository.findAll();
+export class UserService extends BaseService<IUserDTO, IUserView, User> {
+  constructor(userRepository: UserRepository) {
+    super(userRepository);
   }
 
-  async getUserById(id: string) {
-    return this.userRepository.findById(id);
+  protected toEntity(data: IUserDTO): Partial<User> {
+    return {
+      key: data.key,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+    };
   }
 
-  async createUser(data: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) {
-    return this.userRepository.create(data);
-  }
-
-  async updateUser(
-    id: string,
-    data: Partial<{
-      firstName: string;
-      lastName: string;
-      email: string;
-    }>,
-  ) {
-    return this.userRepository.update(id, data);
-  }
-
-  async deleteUser(id: string) {
-    return this.userRepository.delete(id);
+  protected toView(entity: User): IUserView {
+    return {
+      key: entity.key,
+      firstName: entity.firstName,
+      lastName: entity.lastName,
+      email: entity.email,
+    };
   }
 }
