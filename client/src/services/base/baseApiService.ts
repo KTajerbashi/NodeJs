@@ -3,7 +3,13 @@ import { API_CONFIG } from "../configs/apiConfig";
 
 class BaseApiService {
   private baseUrl = API_CONFIG.baseUrl;
-
+  /**
+   *
+   */
+  constructor(controller: string) {
+    this.baseUrl = `${this.baseUrl}/${controller}/`;
+    console.log("this.baseUrl : ", this.baseUrl);
+  }
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}${url}`, {
       ...options,

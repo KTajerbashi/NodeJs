@@ -10,6 +10,10 @@ import { AppCard } from "../../components/AppCard/AppCard";
 import { AppContent } from "../../components/AppContent/AppContent";
 import { AppTitle } from "../../components/AppTitle/AppTitle";
 import AppFormError from "../../components/AppFormError/AppFormError";
+import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
+import AppGrid from "../../components/AppGrid/AppGrid";
+import AppGridItem from "../../components/AppGridItem/AppGridItem";
+import { AppAction } from "../../components/AppActions/AppActions";
 
 const columns = [
   // {
@@ -205,116 +209,101 @@ function Users() {
           </button>
         }
       >
-        {error && <div className="app-error">{error}</div>}
+        <AppFormError key={"form"} error={error} />
 
         {isFormOpen && (
-          <AppCard>
-            <form onSubmit={handleSubmit} noValidate>
-              <AppContent>
-                <AppTitle>
-                  {selectRecord ? "Edit User" : "Create User"}
-                </AppTitle>
+          <form onSubmit={handleSubmit} noValidate>
+            <AppContent>
+              <AppTitle>{selectRecord ? "Edit User" : "Create User"}</AppTitle>
 
-                <div className="app-grid">
-                  {/* First Name */}
-                  <div className="app-width-1-4">
-                    <label htmlFor="firstName">First Name</label>
+              <AppGrid>
+                <AppGridItem className="app-width-1-4">
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={form.firstName}
+                    className={`app-form-input ${formValidation.firstName ? "is-invalid" : ""}`}
+                    onChange={handleChange}
+                  />
+                  <AppFormControlError
+                    invalid={formValidation.firstName.length > 0}
+                    message={formValidation.firstName}
+                  />
+                </AppGridItem>
+                <AppGridItem className="app-width-1-4">
+                  <label htmlFor="lastName">Last Name</label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={form.lastName}
+                    className={`app-form-input ${formValidation.lastName ? "is-invalid" : ""}`}
+                    onChange={handleChange}
+                  />
+                  <AppFormControlError
+                    invalid={formValidation.lastName.length > 0}
+                    message={formValidation.lastName}
+                  />
+                </AppGridItem>
+                {/* Email */}
+                <AppGridItem className="app-width-1-4">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
+                    className={`app-form-input ${formValidation.email ? "is-invalid" : ""}`}
+                    onChange={handleChange}
+                  />
+                  <AppFormControlError
+                    invalid={formValidation.email.length > 0}
+                    message={formValidation.email}
+                  />
+                </AppGridItem>
+                {/* Password */}
+                <AppGridItem className="app-width-1-4">
+                  <label htmlFor="password">Password</label>
 
-                    <input
-                      id="firstName"
-                      type="text"
-                      name="firstName"
-                      placeholder="First Name"
-                      value={form.firstName}
-                      className={`app-form-input ${formValidation.firstName ? "is-invalid" : ""}`}
-                      onChange={handleChange}
-                    />
-                    <AppFormError
-                      invalid={!formValidation.firstName}
-                      message={formValidation.firstName}
-                    />
-                  </div>
+                  <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder={
+                      selectRecord ? "New Password (optional)" : "Password"
+                    }
+                    value={form.password}
+                    className={`app-form-input ${formValidation.password ? "is-invalid" : ""}`}
+                    onChange={handleChange}
+                  />
 
-                  {/* Last Name */}
-                  <div className="app-width-1-4">
-                    <label htmlFor="lastName">Last Name</label>
+                  <AppFormControlError
+                    invalid={
+                      formValidation.password == null
+                        ? true
+                        : formValidation.password.length > 0
+                    }
+                    message={formValidation.password}
+                  />
+                </AppGridItem>
+              </AppGrid>
+              <AppAction>
+                <button type="button" className="app-btn" onClick={closeForm}>
+                  Cancel
+                </button>
 
-                    <input
-                      id="lastName"
-                      type="text"
-                      name="lastName"
-                      placeholder="Last Name"
-                      value={form.lastName}
-                      className={`app-form-input ${formValidation.lastName ? "is-invalid" : ""}`}
-                      onChange={handleChange}
-                    />
-                    <AppFormError
-                      invalid={formValidation.lastName.length > 0}
-                      message={formValidation.lastName}
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div className="app-width-1-4">
-                    <label htmlFor="email">Email</label>
-
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={form.email}
-                      className={`app-form-input ${formValidation.email ? "is-invalid" : ""}`}
-                      onChange={handleChange}
-                    />
-
-                    <AppFormError
-                      invalid={formValidation.email.length > 0}
-                      message={formValidation.email}
-                    />
-                  </div>
-
-                  {/* Password */}
-                  <div className="app-width-1-4">
-                    <label htmlFor="password">Password</label>
-
-                    <input
-                      id="password"
-                      type="password"
-                      name="password"
-                      placeholder={
-                        selectRecord ? "New Password (optional)" : "Password"
-                      }
-                      value={form.password}
-                      className={`app-form-input ${formValidation.password ? "is-invalid" : ""}`}
-                      onChange={handleChange}
-                    />
-
-                    <AppFormError
-                      invalid={
-                        formValidation.password == null
-                          ? true
-                          : formValidation.password.length > 0
-                      }
-                      message={formValidation.password}
-                    />
-                  </div>
-                </div>
-
-                <div className="user-form-actions">
-                  <button type="button" className="app-btn" onClick={closeForm}>
-                    Cancel
-                  </button>
-
-                  <button type="submit" className="app-btn success">
-                    {selectRecord ? "Update" : "Create"}
-                  </button>
-                </div>
-              </AppContent>
-            </form>
-          </AppCard>
+                <button type="submit" className="app-btn success">
+                  {selectRecord ? "Update" : "Create"}
+                </button>
+              </AppAction>
+            </AppContent>
+          </form>
         )}
-
         <DataGrid
           columns={columns}
           data={data}

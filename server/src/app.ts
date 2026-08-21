@@ -3,6 +3,7 @@ import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
+import settingRoutes from "./routes/settingRoutes.js";
 
 console.log("🚀 app.ts started");
 
@@ -21,5 +22,7 @@ app.get("/health", (_req, res) => {
 app.use("/api/users", userRoutes);
 
 app.use("/api/roles", roleRoutes);
+
+app.use("/api/settings", settingRoutes);
 
 export default app;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Signup.css";
 import { Link } from "react-router-dom";
 import authService from "../../services/authService";
-import AppFormError from "../../components/AppFormError/AppFormError";
+import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
 
 function Signup() {
   const [form, setForm] = useState({
@@ -93,7 +93,7 @@ function Signup() {
             value={form.firstName}
             onChange={handleChange}
           />
-          <AppFormError
+          <AppFormControlError
             invalid={errors.firstName}
             message={"FirstName is required"}
           />
@@ -109,7 +109,7 @@ function Signup() {
             value={form.lastName}
             onChange={handleChange}
           />
-          <AppFormError
+          <AppFormControlError
             invalid={errors.lastName}
             message={"LastName is required"}
           />
@@ -126,7 +126,10 @@ function Signup() {
             value={form.email}
             onChange={handleChange}
           />
-          <AppFormError invalid={errors.email} message={"Email is required"} />
+          <AppFormControlError
+            invalid={errors.email}
+            message={"Email is required"}
+          />
         </div>
 
         <div className="app-form-group">
@@ -140,7 +143,7 @@ function Signup() {
             value={form.password}
             onChange={handleChange}
           />
-          <AppFormError
+          <AppFormControlError
             invalid={errors.password}
             message={"Password is required"}
           />
@@ -160,7 +163,7 @@ function Signup() {
             onChange={handleChange}
           />
 
-          <AppFormError
+          <AppFormControlError
             invalid={errors.confirmPassword}
             message={"Confirm Password is required"}
           />

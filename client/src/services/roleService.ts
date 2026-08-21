@@ -1,24 +1,28 @@
 import BaseApiService from "./base/baseApiService";
 
 class RoleSerivce extends BaseApiService {
+  constructor() {
+    super("roles");
+  }
+
   getAll() {
-    return this.get<IRole[]>("/roles");
+    return this.get<IRole[]>("");
   }
 
   getById(id: string) {
-    return this.get<IRole>(`/roles/${id}`);
+    return this.get<IRole>(`${id}`);
   }
 
   create(role: IRoleRequest) {
-    return this.post<IRoleRequest, IRoleResponse>("/roles", role);
+    return this.post<IRoleRequest, IRoleResponse>("", role);
   }
 
   update(id: string, role: IRoleRequest) {
-    return this.put<IRoleRequest, IRoleResponse>(`/roles/${id}`, role);
+    return this.put<IRoleRequest, IRoleResponse>(`${id}`, role);
   }
 
   remove(id: string) {
-    return this.delete<boolean>(`/roles/${id}`);
+    return this.delete<boolean>(`${id}`);
   }
 }
 

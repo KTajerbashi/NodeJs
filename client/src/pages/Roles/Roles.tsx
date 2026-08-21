@@ -9,6 +9,10 @@ import DataGrid from "../../components/DataGrid/DataGrid";
 import useRoles from "../../hooks/useRoles";
 import { AppAction } from "../../components/AppActions/AppActions";
 import roleService from "../../services/roleService";
+import AppFormError from "../../components/AppFormError/AppFormError";
+import AppGrid from "../../components/AppGrid/AppGrid";
+import AppGridItem from "../../components/AppGridItem/AppGridItem";
+import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
 const columns = [
   {
     key: "title",
@@ -32,11 +36,7 @@ function Roles() {
   const { data, setData, loading, error, setError } = useRoles();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectRecord, setSelectRecord] = useState<IRole | null>(null);
-  const [form, setForm] = useState<IRoleRequest>({
-    key: "",
-    title: "",
-    code: "",
-  });
+  const [form, setForm] = useState<IRoleRequest>(emptyForm());
 
   const closeForm = () => {
     setIsFormOpen(false);
@@ -157,9 +157,9 @@ function Roles() {
           <form onSubmit={handleSubmit} noValidate>
             <AppContent>
               <AppTitle>{selectRecord ? "Edit Role" : "Create Role"}</AppTitle>
-              {error && <div className="app-error">{error}</div>}
-              <div className="app-grid">
-                <div className="app-width-1-2">
+              <AppFormError key={"form"} error={error} />
+              <AppGrid>
+                <AppGridItem className="app-width-1-2">
                   <label htmlFor="title">Title</label>
                   <input
                     type="text"
@@ -174,8 +174,12 @@ function Roles() {
                     }
                     required
                   />
-                </div>
-                <div className="app-width-1-2">
+                  <AppFormControlError
+                    invalid={formValidation.title.length > 0}
+                    message={formValidation.title}
+                  />
+                </AppGridItem>
+                <AppGridItem className="app-width-1-2">
                   <label htmlFor="code">Code</label>
                   <input
                     type="text"
@@ -190,8 +194,12 @@ function Roles() {
                     }
                     required
                   />
-                </div>
-              </div>
+                  <AppFormControlError
+                    invalid={formValidation.code.length > 0}
+                    message={formValidation.code}
+                  />
+                </AppGridItem>
+              </AppGrid>
               <AppAction>
                 <button type="button" className="app-btn" onClick={closeForm}>
                   Cancel
@@ -206,31 +214,29 @@ function Roles() {
         ) : (
           ""
         )}
-        <AppContent>
-          <DataGrid
-            columns={columns}
-            data={data}
-            loading={loading}
-            onRowClick={handleRowClick}
-            actions={[
-              {
-                label: "View",
-                className: "primary",
-                onClick: handleView,
-              },
-              {
-                label: "Edit",
-                className: "success",
-                onClick: openEditForm,
-              },
-              {
-                label: "Delete",
-                className: "danger",
-                onClick: handleDelete,
-              },
-            ]}
-          />
-        </AppContent>
+        <DataGrid
+          columns={columns}
+          data={data}
+          loading={loading}
+          onRowClick={handleRowClick}
+          actions={[
+            {
+              label: "View",
+              className: "primary",
+              onClick: handleView,
+            },
+            {
+              label: "Edit",
+              className: "success",
+              onClick: openEditForm,
+            },
+            {
+              label: "Delete",
+              className: "danger",
+              onClick: handleDelete,
+            },
+          ]}
+        />
       </AppCard>
     </AppContainer>
   );

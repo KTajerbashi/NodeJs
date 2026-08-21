@@ -1,18 +1,13 @@
 import "./AppFormError.css";
-
 interface AppFormErrorProps {
-  message?: string;
-  invalid: boolean;
+  error?: string | null;
 }
 
-function AppFormError({ message, invalid }: AppFormErrorProps) {
-  if (!invalid) {
+function AppFormError({ error }: AppFormErrorProps) {
+  if (!error) {
     return;
   }
-  if (!message) {
-    return;
-  }
-  return <div className="app-form-error">{message}</div>;
+  return <div className="app-error">{error}</div>;
 }
 
 export default AppFormError;

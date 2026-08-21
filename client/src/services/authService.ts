@@ -6,6 +6,10 @@ const USERS_KEY = "react_admin_users";
 const SESSION_KEY = "react_admin_session";
 
 class AuthService extends BaseApiService {
+
+  constructor() {
+    super("authentication");
+  }
   signup(user: IUser): boolean {
     const users = this.getUsers();
 
