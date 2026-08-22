@@ -7,7 +7,7 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
-    
+
     firstName: {
       type: String,
       required: true,
@@ -26,6 +26,12 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
+    },
+
+    passwordHash: {
+      type: String,
+      required: true,
+      select: false,
     },
   },
   {

@@ -1,4 +1,4 @@
-import { BaseRepository } from "./base/baseRepository.js";
+import { BaseRepository } from "./base/base.repository.js";
 import { Setting, SettingModel } from "../models/setting/settingModel.js";
 
 export class SettingRepository extends BaseRepository<Setting> {

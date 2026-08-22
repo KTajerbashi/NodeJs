@@ -21,7 +21,7 @@ export class BaseRepository<T> {
 
   async updateById(id: string, data: UpdateQuery<T>): Promise<T | null> {
     console.log("[updateById] ", id, data);
-    return this.model.findByIdAndUpdate({ id }, data, {
+    return this.model.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });
@@ -34,7 +34,7 @@ export class BaseRepository<T> {
 
   async deleteById(id: string): Promise<T | null> {
     console.log("[deleteById] ", id);
-    return this.model.findByIdAndDelete({ id });
+    return this.model.findByIdAndDelete(id);
   }
 
   async getById(id: string): Promise<T | null> {
