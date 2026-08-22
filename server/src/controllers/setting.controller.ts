@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { SettingService } from "../services/settingService.js";
-import { SettingRepository } from "../repositories/settingRepository.js";
+import { SettingService } from "../services/setting.service.js";
+import { SettingRepository } from "../repositories/setting.repository.js";
 import { generateGuid } from "../extensions/stringExtensions.js";
 
 const service = new SettingService(new SettingRepository());

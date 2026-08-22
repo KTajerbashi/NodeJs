@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { RoleService } from "../services/roleService.js";
-import { RoleRepository } from "../repositories/roleRepository.js";
+import { RoleService } from "../services/role.service.js";
+import { RoleRepository } from "../repositories/role.repository.js";
 import { generateGuid } from "../extensions/stringExtensions.js";
 
 const service = new RoleService(new RoleRepository());
