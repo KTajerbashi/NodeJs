@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
 
-import userRoutes from "./routes/userRoutes.js";
-import roleRoutes from "./routes/roleRoutes.js";
-import settingRoutes from "./routes/settingRoutes.js";
+import userRoutes from "./routes/user.routes.js";
+import roleRoutes from "./routes/role.routes.js";
+import settingRoutes from "./routes/setting.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 console.log("🚀 app.ts started");
 
@@ -18,6 +19,8 @@ app.get("/health", (_req, res) => {
     status: "ok",
   });
 });
+
+app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
 
