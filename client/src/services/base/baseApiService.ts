@@ -3,18 +3,26 @@ import { API_CONFIG } from "../configs/apiConfig";
 
 class BaseApiService {
   private baseUrl = API_CONFIG.baseUrl;
-  /**
-   *
-   */
+
   constructor(controller: string) {
     this.baseUrl = `${this.baseUrl}/${controller}/`;
     console.log("this.baseUrl : ", this.baseUrl);
   }
+
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
+    const token = localStorage.getItem("accessToken");
+
     const response = await fetch(`${this.baseUrl}${url}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+
+        ...(token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : {}),
+
         ...options?.headers,
       },
     });
@@ -24,22 +32,10 @@ class BaseApiService {
         message: "Unknown error",
       }));
 
-      throw new Error(error.message || "API Error");
+      throw new Error(error.message);
     }
 
-    // 204 No Content
-    if (response.status === 204) {
-      return undefined as T;
-    }
-
-    const text = await response.text();
-
-    // Empty response body
-    if (!text) {
-      return undefined as T;
-    }
-
-    return JSON.parse(text) as T;
+    return response.json();
   }
 
   protected get<TResponse>(url: string): Promise<TResponse> {

@@ -36,7 +36,7 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const validation = {
@@ -59,8 +59,7 @@ function Signup() {
       return;
     }
 
-    const result = authService.signup({
-      // id: crypto.randomUUID(),
+    const result = await authService.signup({
       key: "",
       ...form,
     });

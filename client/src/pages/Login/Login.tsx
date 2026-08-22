@@ -3,16 +3,16 @@ import { useState } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import authService from "../../services/authService";
-import AppFormError from "../../components/AppFormError/AppFormError";
+import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
 
 function Login() {
-  const [email, setEmail] = useState("admin@mail.com");
-  const [password, setPassword] = useState("admin");
+  const [email, setEmail] = useState("kamran_tajerbashi@mail.com");
+  const [password, setPassword] = useState("123123123");
   const [errors, setErrors] = useState({
     email: false,
     password: false,
   });
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const newErrors = {
@@ -26,9 +26,9 @@ function Login() {
       return;
     }
 
-    const success = authService.login(email, password);
-
-    if (success) {
+    const result = await authService.login(email, password);
+    if (result.isSuccess) {
+      localStorage.setItem("accessToken", result.accessToken);
       window.location.href = "/dashboard";
     } else {
       setErrors({
@@ -62,7 +62,10 @@ function Login() {
             }}
             placeholder="email@example.com"
           />
-          <AppFormError invalid={errors.email} message={"Email is required"} />
+          <AppFormControlError
+            invalid={errors.email}
+            message={"Email is required"}
+          />
         </div>
 
         <div className="login__field app-form-group">
@@ -82,7 +85,10 @@ function Login() {
             }}
             placeholder="Password"
           />
-          <AppFormError invalid={errors.password} message={"Password is required"} />
+          <AppFormControlError
+            invalid={errors.password}
+            message={"Password is required"}
+          />
         </div>
 
         <div className="login__options">

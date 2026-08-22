@@ -1,75 +1,36 @@
-// import type { User } from "../models/user";
-
 import BaseApiService from "./base/baseApiService";
-
-const USERS_KEY = "react_admin_users";
-const SESSION_KEY = "react_admin_session";
-
+const accessToken = "accessToken";
 class AuthService extends BaseApiService {
-
   constructor() {
-    super("authentication");
-  }
-  signup(user: IUser): boolean {
-    const users = this.getUsers();
-
-    const exists = users.some((x) => x.email === user.email);
-
-    if (exists) {
-      return false;
-    }
-
-    users.push(user);
-
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-
-    return true;
+    super("auth");
   }
 
-  login(email: string, password: string): boolean {
-    const users = this.getUsers();
-
-    const user = users.find(
-      (x) => x.email === email && x.password === password,
-    );
-
-    if (!user) {
-      return false;
-    }
-
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
-
-    return true;
+  public logout(): void {
+    sessionStorage.removeItem(accessToken);
+    localStorage.removeItem(accessToken);
   }
 
-  logout(): void {
-    sessionStorage.removeItem(SESSION_KEY);
+  public login(email: string, password: string) {
+    return this.post<ILoginDTO, IAuthResponse>("login", {
+      email: email,
+      password: password,
+    });
   }
 
-  getCurrentUser(): IUser | null {
-    const user = sessionStorage.getItem(SESSION_KEY);
-
-    if (!user) {
-      return null;
-    }
-
-    return JSON.parse(user);
+  public signup(model: IUser) {
+    return this.post<IUser, IAuthResponse>("signup", model);
   }
 
-  isAuthenticated(): boolean {
-    return sessionStorage.getItem(SESSION_KEY) !== null;
+  public getCurrentUser() {
+    return this.get<IUser>("current-user");
   }
 
-
-
-  private getUsers(): IUser[] {
-    const users = localStorage.getItem(USERS_KEY);
-
-    if (!users) {
-      return [];
-    }
-
-    return JSON.parse(users);
+  public isAuthentication() {
+    return this.get<boolean>("is-authenticated");
+  }
+  
+  public getAccessToken() {
+    return localStorage.getItem(accessToken);
   }
 }
 
