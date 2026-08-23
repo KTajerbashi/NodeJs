@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
 import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("kamran_tajerbashi@mail.com");
   const [password, setPassword] = useState("123123123");
   const [errors, setErrors] = useState({
@@ -29,7 +30,9 @@ function Login() {
     const result = await authService.login(email, password);
     if (result.isSuccess) {
       localStorage.setItem("accessToken", result.accessToken);
-      window.location.href = "/dashboard";
+      navigate("/dashboard", {
+        replace: true,
+      });
     } else {
       setErrors({
         email: true,

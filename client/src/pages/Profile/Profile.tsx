@@ -10,15 +10,23 @@ import "./Profile.css";
 function Profile() {
   const [profile, setProfile] = useState<IUser>();
   const [auth, setAuth] = useState<boolean>();
-  const onSignUp = () => {
-    const response = authService.signup({} as IUser);
+  const onSignUp = async () => {
+    const response = await authService.signup({
+      _id: "",
+      key: "",
+      email: "kamran_tajerbashi@mail.com",
+      firstName: "Kamran",
+      lastName: "Tajerbashi",
+      password: "123123123",
+    } as IUser);
     console.log("[onSignUp] ", response);
   };
-  const onLogin = () => {
-    const response = authService.login(
+  const onLogin = async () => {
+    const response = await authService.login(
       "kamran_tajerbashi@mail.com",
       "123123123",
     );
+
     console.log("[onLogin] ", response);
   };
   const onCurrentUser = async () => {

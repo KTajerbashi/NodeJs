@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import app from "./app.js";
 import { connectDatabase } from "./config/database.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const port = Number(process.env.PORT) || 5000;
 
@@ -17,6 +18,7 @@ async function startServer(): Promise<void> {
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
   });
+  app.use(errorMiddleware);
 }
 
 startServer().catch((error) => {

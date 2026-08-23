@@ -4,7 +4,7 @@ import authService from "../services/authService";
 function ProtectedRoute() {
   const location = useLocation();
 
-  const token = authService.getAccessToken();
+  const token = authService.getStoredAccessToken();
 
   if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;

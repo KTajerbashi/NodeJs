@@ -7,8 +7,11 @@ import {
   update,
   remove,
 } from "../controllers/role.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = Router();
+
+router.use(authMiddleware);
 
 router.get("/", getAll);
 

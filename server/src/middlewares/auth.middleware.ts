@@ -15,7 +15,6 @@ export function authMiddleware(
 ): void {
   const authorization = req.headers.authorization;
   if (!authorization) {
-    console.log("⚠️");
     res.status(401).json({
       message: "Authentication required.",
     });
@@ -26,7 +25,6 @@ export function authMiddleware(
   const [scheme, token] = authorization.split(" ");
 
   if (scheme !== "Bearer" || !token) {
-    console.log("⚠️");
     res.status(401).json({
       message: "Invalid authorization header.",
     });
@@ -36,16 +34,12 @@ export function authMiddleware(
 
   try {
     const payload = verifyAccessToken(token);
-    console.log("[payload]", payload);
-
     req.user = {
       userKey: payload.userKey,
     };
-    console.log("[req.user]", req.user);
 
     next();
   } catch {
-    console.log("⚠️");
     res.status(401).json({
       message: "Invalid or expired token.",
     });

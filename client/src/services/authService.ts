@@ -28,9 +28,13 @@ class AuthService extends BaseApiService {
   public isAuthentication() {
     return this.get<boolean>("is-authenticated");
   }
-  
-  public getAccessToken() {
-    return localStorage.getItem(accessToken);
+
+  public getStoredAccessToken(): string | null {
+    return localStorage.getItem("accessToken");
+  }
+
+  public validateAccessToken(): Promise<IAuthResponse> {
+    return this.get<IAuthResponse>("access-token");
   }
 }
 

@@ -1,41 +1,139 @@
 import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 import { API_CONFIG } from "../configs/apiConfig";
+import alertService from "../configs/alertService";
 
 class BaseApiService {
   private baseUrl = API_CONFIG.baseUrl;
 
   constructor(controller: string) {
     this.baseUrl = `${this.baseUrl}/${controller}/`;
-    console.log("this.baseUrl : ", this.baseUrl);
   }
 
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
     const token = localStorage.getItem("accessToken");
 
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
+    try {
+      const response = await fetch(`${this.baseUrl}${url}`, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
 
-        ...(token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {}),
+          ...(token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {}),
 
-        ...options?.headers,
-      },
-    });
+          ...options?.headers,
+        },
+      });
+      console.log("[response]", response);
+      // Request موفق
+      if (response.ok) {
+        // 204 No Content
+        if (response.status === 204) {
+          return undefined as T;
+        }
+        // alertService.success("Successfully");
+        return await response.json();
+      }
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({
-        message: "Unknown error",
-      }));
+      // تلاش برای خواندن خطای Backend
+      const errorBody = await response.json().catch(() => null);
+      const message = errorBody?.message;
+      switch (response.status) {
+        case 400: {
+          const errorMessage = message ?? "درخواست نامعتبر است.";
 
-      throw new Error(error.message);
+          alertService.error(errorMessage, "Bad Request");
+
+          throw new Error(errorMessage);
+        }
+
+        case 401: {
+          const errorMessage = message ?? "احراز هویت انجام نشده است.";
+
+          localStorage.removeItem("accessToken");
+
+          alertService.error(errorMessage, "Unauthorized");
+
+          throw new Error(errorMessage);
+        }
+
+        case 403: {
+          const errorMessage =
+            message ?? "شما دسترسی لازم برای انجام این عملیات را ندارید.";
+
+          alertService.error(errorMessage, "Access Denied");
+
+          throw new Error(errorMessage);
+        }
+
+        case 404: {
+          const errorMessage = message ?? "منبع مورد نظر پیدا نشد.";
+
+          alertService.error(errorMessage, "Not Found");
+
+          throw new Error(errorMessage);
+        }
+
+        case 409: {
+          const errorMessage =
+            message ?? "این درخواست با وضعیت فعلی سیستم تداخل دارد.";
+
+          alertService.error(errorMessage, "Conflict");
+
+          throw new Error(errorMessage);
+        }
+
+        case 422: {
+          const errorMessage = message ?? "اطلاعات ارسال شده معتبر نیست.";
+
+          alertService.error(errorMessage, "Validation Error");
+
+          throw new Error(errorMessage);
+        }
+
+        case 500: {
+          const errorMessage = message ?? "خطای داخلی سرور رخ داده است.";
+          console.log("[message]", message);
+          console.log("[errorMessage]", errorMessage);
+          alertService.error(errorMessage, "Server Error");
+
+          throw new Error(errorMessage);
+        }
+
+        case 502:
+        case 503:
+        case 504: {
+          const errorMessage =
+            message ??
+            "سرور در حال حاضر در دسترس نیست. لطفاً دوباره تلاش کنید.";
+
+          alertService.error(errorMessage, "Server Unavailable");
+
+          throw new Error(errorMessage);
+        }
+
+        default: {
+          const errorMessage = message ?? `خطای HTTP: ${response.status}`;
+
+          alertService.error(errorMessage, `HTTP ${response.status}`);
+
+          throw new Error(errorMessage);
+        }
+      }
+    } catch (error) {
+      // خطای Network / fetch
+      if (error instanceof TypeError) {
+        alertService.error(
+          "ارتباط با سرور برقرار نشد. لطفاً اتصال اینترنت یا وضعیت سرور را بررسی کنید.",
+          "Connection Error",
+        );
+      }
+
+      throw error;
     }
-
-    return response.json();
   }
 
   protected get<TResponse>(url: string): Promise<TResponse> {
