@@ -73,7 +73,7 @@ export async function getCurrentUser(
   const user = await authService.getCurrentUser(userKey);
 
   if (!user) {
-    res.status(404).json({
+    res.status(401).json({
       message: "User not found.",
     });
 

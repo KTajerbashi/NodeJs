@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../repositories/auth.repository.js";
 import { UserRepository } from "../repositories/user.repository.js";
 import { generateAccessToken } from "../utils/jwt.js";
+import { AppError } from "../exceptions/AppError.js";
 
 export class AuthService {
   constructor(private readonly authRepository: AuthRepository) {}
