@@ -19,8 +19,8 @@ function Header() {
 
         if (isMounted) {
           console.log("Current User:", currentUser);
-          setUser(currentUser);
-          setAuth(isAuth);
+          setUser(currentUser.data);
+          setAuth(isAuth.data);
         }
       } catch (error) {
         console.error("Failed to load current user:", error);

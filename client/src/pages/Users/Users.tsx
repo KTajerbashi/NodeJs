@@ -14,7 +14,7 @@ import AppFormControlError from "../../components/AppFormControlError/AppFormCon
 import AppGrid from "../../components/AppGrid/AppGrid";
 import AppGridItem from "../../components/AppGridItem/AppGridItem";
 import { AppAction } from "../../components/AppActions/AppActions";
-
+console.log("[userService]", userService);
 const columns = [
   // {
   //   key: "key",
@@ -138,7 +138,10 @@ function Users() {
 
     try {
       if (selectRecord) {
-        const updatedUser = await userService.update(selectRecord.key, form);
+        const updatedUser = await userService.onUpdate<
+          UserRequest,
+          UserResponse
+        >(selectRecord.key, form);
 
         setData((currentUsers) =>
           currentUsers.map((user) =>
@@ -151,7 +154,10 @@ function Users() {
           ),
         );
       } else {
-        const createdUser = await userService.create(form);
+        const createdUser = await userService.onCreate<
+          UserRequest,
+          IUser
+        >("", form);
 
         setData((currentUsers) => [...currentUsers, createdUser]);
       }
@@ -164,16 +170,8 @@ function Users() {
   };
 
   const handleDelete = async (user: IUser) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
     try {
-      await userService.remove(user.key);
+      await userService.onDelete(user.key);
 
       setData((currentUsers) =>
         currentUsers.filter((item) => item.key !== user.key),

@@ -7,7 +7,7 @@ import AppFormControlError from "../../components/AppFormControlError/AppFormCon
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("kamran_tajerbashi@mail.com");
+  const [email, setEmail] = useState("kamrantajerbashi@gmail.com");
   const [password, setPassword] = useState("123123123");
   const [errors, setErrors] = useState({
     email: false,
@@ -29,7 +29,6 @@ function Login() {
 
     const result = await authService.login(email, password);
     if (result.isSuccess) {
-      localStorage.setItem("accessToken", result.accessToken);
       navigate("/dashboard", {
         replace: true,
       });

@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
 import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
+import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 
 function Signup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -60,14 +62,12 @@ function Signup() {
     }
 
     const result = await authService.signup({
-      key: "",
+      key: generateGuid(),
       ...form,
     });
 
-    if (result) {
-      alert("Account created successfully");
-
-      window.location.href = "/login";
+    if (result.isSuccess) {
+      navigate("/login");
     }
   };
 
