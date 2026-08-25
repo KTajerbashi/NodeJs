@@ -1,28 +1,8 @@
-import BaseApiService from "./base/baseApiService";
+import EntityService from "./base/entity.service";
 
-class SettingSerivce extends BaseApiService {
+class SettingSerivce extends EntityService {
   constructor() {
     super("settings");
-  }
-
-  getAll() {
-    return this.get<ISetting[]>("");
-  }
-
-  getById(id: string) {
-    return this.get<ISetting>(`/${id}`);
-  }
-
-  create(role: ISettingRequest) {
-    return this.post<ISettingRequest, ISettingResponse>("", role);
-  }
-
-  update(id: string, role: ISettingRequest) {
-    return this.put<ISettingRequest, ISettingResponse>(`${id}`, role);
-  }
-
-  remove(id: string) {
-    return this.delete<boolean>(`${id}`);
   }
 }
 

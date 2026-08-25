@@ -1,6 +1,6 @@
-import BaseApiService from "./base/baseApiService";
+import EntityService from "./base/entity.service";
 
-class PrivilegeSerivce extends BaseApiService {
+class PrivilegeSerivce extends EntityService {
   constructor() {
     super("privilege");
   }

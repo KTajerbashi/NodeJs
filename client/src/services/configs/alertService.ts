@@ -38,7 +38,7 @@ class AlertService {
   }
 
   confirm(message: string, title = "Are you sure?") {
-    return Swal.fire({
+    return Swal.fire<IAlertParameter>({
       icon: "warning",
       title,
       text: message,

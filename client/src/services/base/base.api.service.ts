@@ -1,15 +1,17 @@
-import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 import { API_CONFIG } from "../configs/apiConfig";
 import alertService from "../configs/alertService";
 
-class BaseApiService {
+export default class BaseApiService {
   private baseUrl = API_CONFIG.baseUrl;
 
   constructor(controller: string) {
     this.baseUrl = `${this.baseUrl}/${controller}/`;
   }
 
-  private async request<T>(url: string, options?: RequestInit): Promise<T> {
+  private async request<T>(
+    url: string,
+    options?: RequestInit,
+  ): Promise<IApiResponse<T>> {
     const token = localStorage.getItem("accessToken");
 
     try {
@@ -17,30 +19,44 @@ class BaseApiService {
         ...options,
         headers: {
           "Content-Type": "application/json",
-
           ...(token
             ? {
                 Authorization: `Bearer ${token}`,
               }
             : {}),
-
           ...options?.headers,
         },
       });
+
       console.log("[response]", response);
-      // Request موفق
+
+      // ============================================
+      // Successful response
+      // ============================================
       if (response.ok) {
         // 204 No Content
         if (response.status === 204) {
-          return undefined as T;
+          return {
+            isSuccess: true,
+            data: undefined as T,
+            message: "Operation completed successfully.",
+          };
         }
-        // alertService.success("Successfully");
-        return await response.json();
+        const data = await response.json();
+        return {
+          isSuccess: true,
+          data: data,
+          message: "successfully completed.",
+        } as IApiResponse<T>;
       }
 
-      // تلاش برای خواندن خطای Backend
+      // ============================================
+      // Backend error response
+      // ============================================
       const errorBody = await response.json().catch(() => null);
-      const message = errorBody?.message;
+
+      const message = errorBody?.message ?? "An unexpected error occurred.";
+
       switch (response.status) {
         case 400: {
           const errorMessage = message ?? "درخواست نامعتبر است.";
@@ -96,8 +112,7 @@ class BaseApiService {
 
         case 500: {
           const errorMessage = message ?? "خطای داخلی سرور رخ داده است.";
-          console.log("[message]", message);
-          console.log("[errorMessage]", errorMessage);
+
           alertService.error(errorMessage, "Server Error");
 
           throw new Error(errorMessage);
@@ -124,19 +139,21 @@ class BaseApiService {
         }
       }
     } catch (error) {
-      // خطای Network / fetch
+      // ============================================
+      // Network / fetch error
+      // ============================================
       if (error instanceof TypeError) {
         alertService.error(
           "ارتباط با سرور برقرار نشد. لطفاً اتصال اینترنت یا وضعیت سرور را بررسی کنید.",
           "Connection Error",
         );
       }
-
+      console.log("[error]", error);
       throw error;
     }
   }
 
-  protected get<TResponse>(url: string): Promise<TResponse> {
+  protected get<TResponse>(url: string): Promise<IApiResponse<TResponse>> {
     return this.request<TResponse>(url, {
       method: "GET",
     });
@@ -145,43 +162,34 @@ class BaseApiService {
   protected post<TRequest, TResponse>(
     url: string,
     data: TRequest,
-  ): Promise<TResponse> {
+  ): Promise<IApiResponse<TResponse>> {
     return this.request<TResponse>(url, {
       method: "POST",
       body: JSON.stringify(data),
-    });
-  }
-
-  protected onCreate<TRequest, TResponse>(
-    url: string,
-    data: TRequest,
-  ): Promise<TResponse> {
-    const requestData = {
-      ...data,
-      key: generateGuid(),
-    };
-
-    return this.request<TResponse>(url, {
-      method: "POST",
-      body: JSON.stringify(requestData),
     });
   }
 
   protected put<TRequest, TResponse>(
     url: string,
     data: TRequest,
-  ): Promise<TResponse> {
+  ): Promise<IApiResponse<TResponse>> {
     return this.request<TResponse>(url, {
       method: "PUT",
       body: JSON.stringify(data),
     });
   }
 
-  protected delete<TResponse>(url: string): Promise<TResponse> {
+  protected async delete<TResponse>(
+    url: string,
+  ): Promise<IApiResponse<TResponse> | undefined> {
+    const result = await alertService.confirm("Delete Record!");
+
+    if (!result.isConfirmed) {
+      return undefined;
+    }
+
     return this.request<TResponse>(url, {
       method: "DELETE",
     });
   }
 }
-
-export default BaseApiService;
