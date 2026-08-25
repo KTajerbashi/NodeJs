@@ -12,7 +12,7 @@ function useUsers() {
 
     const fetchUsers = async () => {
       try {
-        const data = await userService.getAll();
+        const data = await userService.onReadAll<IUser[]>("");
 
         if (!cancelled) {
           setData(data);
