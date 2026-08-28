@@ -13,12 +13,16 @@ export async function signup(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const user = await authService.signup(req.body);
+    const response = await authService.signup(req.body);
+    console.log("[signup]", response);
 
-    console.log("[signup]", user);
-
-    res.status(201).json(user);
+    if (response.isSuccess) {
+      res.status(201).json(response);
+    } else {
+      res.status(400).json(response);
+    }
   } catch (error) {
+    console.log("[signup]", error);
     next(error);
   }
 }

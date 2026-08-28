@@ -12,7 +12,10 @@ export class AuthService {
     const existingUser = await this.authRepository.findByEmail(data.email);
 
     if (existingUser) {
-      throw new Error("Email is already registered.");
+      return {
+        isSuccess: false,
+        message: "Email is already registered.",
+      } as IAuthResponse;
     }
 
     const passwordHash = await bcrypt.hash(data.password, 12);
@@ -30,6 +33,7 @@ export class AuthService {
     return {
       accessToken,
       isSuccess: true,
+      message: "success",
       user: {
         key: user.key,
         firstName: user.firstName,
@@ -43,7 +47,10 @@ export class AuthService {
     const user = await this.authRepository.findByEmail(data.email);
 
     if (!user || !user.passwordHash) {
-      throw new Error("Invalid email or password.");
+      return {
+        isSuccess: false,
+        message: "Invalid email or password.",
+      } as IAuthResponse;
     }
 
     const passwordIsValid = await bcrypt.compare(
@@ -52,7 +59,10 @@ export class AuthService {
     );
 
     if (!passwordIsValid) {
-      throw new Error("Invalid email or password.");
+      return {
+        isSuccess: false,
+        message: "Invalid email or password.",
+      } as IAuthResponse;
     }
 
     const accessToken = generateAccessToken(user.key);
@@ -60,6 +70,7 @@ export class AuthService {
     return {
       accessToken,
       isSuccess: true,
+      message: "login success",
       user: {
         key: user.key,
         firstName: user.firstName,

@@ -14,7 +14,7 @@ function Profile() {
     const response = await authService.signup({
       _id: "",
       key: "",
-      email: "kamran_tajerbashi@mail.com",
+      email: "kamrantajerbashi@gmail.com",
       firstName: "Kamran",
       lastName: "Tajerbashi",
       password: "123123123",
@@ -23,7 +23,7 @@ function Profile() {
   };
   const onLogin = async () => {
     const response = await authService.login(
-      "kamran_tajerbashi@mail.com",
+      "kamrantajerbashi@gmail.com",
       "123123123",
     );
 
@@ -31,13 +31,13 @@ function Profile() {
   };
   const onCurrentUser = async () => {
     const response = await authService.getCurrentUser();
-    setProfile(response);
+    setProfile(response.data);
     console.log("[onCurrentUser] ", response);
   };
   const onIsAuthentication = async () => {
     const response = await authService.isAuthentication();
     console.log("[onIsAuthentication] ", response);
-    setAuth(response);
+    setAuth(response.data);
   };
 
   return (

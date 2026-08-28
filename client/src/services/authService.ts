@@ -49,7 +49,6 @@ class AuthService extends BaseApiService {
       throw error;
     }
   }
-
   public async signup(model: IUser) {
     try {
       const response = await this.post<IUser, IAuthResponse>("signup", model);
@@ -65,9 +64,12 @@ class AuthService extends BaseApiService {
       }
 
       return response;
-    } catch (error) {
-      alertService.error("Unable to create your account. Please try again.");
-
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alertService.error(error.message);
+      } else {
+        alertService.error("Unable to create your account. Please try again.");
+      }
       throw error;
     }
   }
