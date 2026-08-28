@@ -4,7 +4,6 @@ import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
 import AppFormControlError from "../../components/AppFormControlError/AppFormControlError";
-import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 
 function Signup() {
   const navigate = useNavigate();
@@ -62,7 +61,7 @@ function Signup() {
     }
 
     const result = await authService.signup({
-      key: generateGuid(),
+      key: '',
       ...form,
     });
 

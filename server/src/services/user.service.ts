@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { BaseService } from "./base/base.service.js";
 import { User } from "../models/user/userModel.js";
 import { UserRepository } from "../repositories/user.repository.js";
+import { generateGuid } from "../extensions/stringExtensions.js";
 
 export class UserService extends BaseService<IUserDTO, IUserView, User> {
   constructor(repository: UserRepository) {
@@ -12,7 +13,7 @@ export class UserService extends BaseService<IUserDTO, IUserView, User> {
     const passwordHash = await bcrypt.hash(data.password, 12);
 
     const entity: Partial<User> = {
-      key: data.key,
+      key: generateGuid(),
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,

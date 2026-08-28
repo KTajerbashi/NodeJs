@@ -77,7 +77,10 @@ function Settings() {
 
     try {
       if (selectRecord) {
-        const updatedUser = await settingService.update(selectRecord.key, form);
+        const updatedUser = await settingService.onUpdate(
+          selectRecord.key,
+          form,
+        );
         setData((model) =>
           model.map((role) =>
             role.key === selectRecord.key
@@ -89,8 +92,11 @@ function Settings() {
           ),
         );
       } else {
-        const createRecord = await settingService.create(form);
-        setData((model) => [...model, createRecord]);
+        const response = await settingService.onCreate<
+          ISettingRequest,
+          ISetting
+        >("", form);
+        setData((model) => [...model, response.data]);
       }
     } catch (error) {
       console.error(error);
@@ -172,8 +178,8 @@ function Settings() {
                     type="text"
                     name="value"
                     placeholder="Value"
-                    value={form.title}
-                    className={`app-form-input ${formValidation.title ? "is-invalid" : ""}`}
+                    value={form.value}
+                    className={`app-form-input ${formValidation.value ? "is-invalid" : ""}`}
                     onChange={handleChange}
                   />
                   <AppFormControlError

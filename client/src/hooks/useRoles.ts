@@ -12,10 +12,10 @@ function useRoles() {
 
     const fetchData = async () => {
       try {
-        const data = await roleService.getAll();
+        const response = await roleService.onReadAll<IRole[]>();
 
         if (!cancelled) {
-          setData(data);
+          setData(response.data);
         }
       } catch (error) {
         if (!cancelled) {

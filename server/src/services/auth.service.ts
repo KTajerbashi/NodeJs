@@ -4,6 +4,7 @@ import { AuthRepository } from "../repositories/auth.repository.js";
 import { UserRepository } from "../repositories/user.repository.js";
 import { generateAccessToken } from "../utils/jwt.js";
 import { AppError } from "../exceptions/AppError.js";
+import { generateGuid } from "../extensions/stringExtensions.js";
 
 export class AuthService {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -21,7 +22,7 @@ export class AuthService {
     const passwordHash = await bcrypt.hash(data.password, 12);
 
     const user = await this.authRepository.createUser({
-      key: data.key,
+      key: generateGuid(),
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,

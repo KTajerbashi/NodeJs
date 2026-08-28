@@ -12,10 +12,10 @@ function useSettings() {
 
     const fetchData = async () => {
       try {
-        const data = await settingSerivce.getAll();
+        const response = await settingSerivce.onReadAll<ISetting[]>();
 
         if (!cancelled) {
-          setData(data);
+          setData(response.data);
         }
       } catch (error) {
         if (!cancelled) {

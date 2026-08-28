@@ -12,10 +12,10 @@ function useUsers() {
 
     const fetchUsers = async () => {
       try {
-        const data = await userService.onReadAll<IUser[]>("");
+        const response = await userService.onReadAll<IUser[]>("");
 
         if (!cancelled) {
-          setData(data);
+          setData(response.data);
         }
       } catch (error) {
         if (!cancelled) {

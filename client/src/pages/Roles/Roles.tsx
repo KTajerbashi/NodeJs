@@ -77,7 +77,7 @@ function Roles() {
 
     try {
       if (selectRecord) {
-        const updatedUser = await roleService.update(selectRecord.key, form);
+        const updatedUser = await roleService.onUpdate(selectRecord.key, form);
         setData((model) =>
           model.map((role) =>
             role.key === selectRecord.key
@@ -89,8 +89,11 @@ function Roles() {
           ),
         );
       } else {
-        const createRecord = await roleService.create(form);
-        setData((model) => [...model, createRecord]);
+        const response = await roleService.onCreate<IRoleRequest, IRole>(
+          "",
+          form,
+        );
+        setData((model) => [...model, response.data]);
       }
 
       closeForm();
@@ -128,7 +131,7 @@ function Roles() {
     }
 
     try {
-      await roleService.remove(record.key);
+      await roleService.onDelete(record.key);
 
       setData((currentUsers) =>
         currentUsers.filter((item) => item.key !== record.key),

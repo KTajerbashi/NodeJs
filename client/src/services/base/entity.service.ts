@@ -1,4 +1,3 @@
-import { generateGuid } from "../../../../server/src/extensions/stringExtensions";
 import BaseApiService from "./base.api.service";
 
 export default class EntityService extends BaseApiService {
@@ -12,7 +11,7 @@ export default class EntityService extends BaseApiService {
   ): Promise<IApiResponse<TResponse>> {
     const requestData = {
       ...data,
-      key: generateGuid(),
+      key: "",
     };
 
     return this.post<TRequest, TResponse>(url, requestData);

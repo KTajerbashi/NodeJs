@@ -159,7 +159,7 @@ function Users() {
           IUser
         >("", form);
 
-        setData((currentUsers) => [...currentUsers, createdUser]);
+        setData((currentUsers) => [...currentUsers, createdUser.data]);
       }
 
       closeForm();
